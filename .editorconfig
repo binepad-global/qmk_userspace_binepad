@@ -1,8 +1,10 @@
 # EditorConfig helps developers define and maintain consistent coding styles between different editors and IDEs
-# editorconfig.org
+# https://editorconfig.org
+
 root = true
 
 [*]
+end_of_line = lf
 indent_style = space
 indent_size = 4
 
@@ -10,6 +12,9 @@ indent_size = 4
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+
+[{*.yaml,*.yml}] # To match GitHub Actions formatting
+indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
@@ -20,13 +25,12 @@ charset = utf-8
 max_line_length = 200
 
 # Make these match what we have in .gitattributes
-[*.mk]
-end_of_line = lf
-indent_style = tab
-
-[Makefile]
+[{Makefile,*.mk}]
 end_of_line = lf
 indent_style = tab
 
 [*.sh]
 end_of_line = lf
+
+[*.bat]
+end_of_line = crlf

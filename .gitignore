@@ -9,3 +9,5 @@
 *.hex
 *.bin
 *.uf2
+
+.vscode/*
