@@ -3,7 +3,7 @@
 
 #include "quantum.h"
 #include "report.h"
-#include "common.h"
+#include "binepad_common.h"
 #include "caffeine.h"
 
 // needed for rand()
