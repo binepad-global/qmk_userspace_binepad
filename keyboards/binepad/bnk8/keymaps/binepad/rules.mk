@@ -4,8 +4,8 @@
 VIA_ENABLE = yes
 ENCODER_MAP_ENABLE = yes
 
-# RGB_MATRIX_CUSTOM_KB = yes
-# SRC += bnk8_effect.c
+RGB_MATRIX_CUSTOM_KB = yes
+SRC += bnk8_effect.c
 
 # CONSOLE_ENABLE = yes  ## for debugging!
 # COMMAND_ENABLE = yes

@@ -75,10 +75,6 @@ bool led_update_user(led_t led_state) {
 #    endif // RGB_MATRIX_ENABLE
 
 // void keyboard_post_init_user(void) {
-//     #ifdef CAFFEINE_ENABLE
-//     keyboard_post_init_caffeine();
-//     #endif
-
 //     // #ifdef CONSOLE_ENABLE
 //     // // Customise these values to desired behaviour
 //     // debug_enable = true;
@@ -89,9 +85,6 @@ bool led_update_user(led_t led_state) {
 // }
 
 // void eeconfig_init_user(void) {
-//     #ifdef CAFFEINE_ENABLE
-//     eeconfig_init_caffeine();
-//     #endif
 // }
 
 void matrix_scan_user(void) {

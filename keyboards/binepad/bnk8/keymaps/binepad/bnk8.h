@@ -5,7 +5,6 @@
 
 #ifdef VIA_ENABLE // Only works if VIA is enabled
 #    include "color.h"
-#    define EEPROM_USER_CONFIG_ADDRESS (VIA_EEPROM_CUSTOM_CONFIG_ADDR + 1)
 #endif
 
 #ifdef CAFFEINE_ENABLE
@@ -18,17 +17,20 @@ enum bnk9_keyboard {
 
 #endif // CAFFEINE_ENABLE
 
-// #ifdef VIA_ENABLE // Only works if VIA is enabled
+#ifdef VIA_ENABLE // Only works if VIA is enabled
 
-// typedef struct PACKED {
-//     uint8_t h;
-//     uint8_t s;
-// } HS;
+typedef struct PACKED {
+    uint8_t h;
+    uint8_t s;
+} HS;
 
-// typedef struct {
-//     HS color[8];
-// } user_config_t;
+typedef union {
+    uint8_t raw[16];
+    struct {
+      HS color[8];
+    };
+} user_config_t;
 
-// extern user_config_t user_config;
+extern user_config_t g_user_config;
 
-// #endif // VIA_ENABLE
+#endif // VIA_ENABLE
