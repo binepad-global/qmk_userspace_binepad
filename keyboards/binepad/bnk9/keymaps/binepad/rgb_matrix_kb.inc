@@ -25,8 +25,8 @@ static bool bnk9_per_key_effect(effect_params_t* params) {
     hsv.v = rgb_matrix_get_val();
     for (uint8_t i = led_min; i < led_max; i++) {
         if (i < 9) {
-            hsv.h = user_config.color[i].h;
-            hsv.s = user_config.color[i].s;
+            hsv.h = g_user_config.color[i].h;
+            hsv.s = g_user_config.color[i].s;
             rgb   = hsv_to_rgb(hsv);
             rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
         }

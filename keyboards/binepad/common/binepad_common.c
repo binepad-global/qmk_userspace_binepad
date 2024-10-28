@@ -3,7 +3,7 @@
 
 #include "quantum.h"
 #include "report.h"
-#include "common.h"
+#include "binepad_common.h"
 
 #include "color.h"
 
@@ -14,9 +14,9 @@ RGB adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_t min, uint8_t m
     if (brightness > max) brightness = max;
     if (brightness < min) brightness = min;
 
-    ret.r = (uint16_t)r * brightness / 255;
-    ret.g = (uint16_t)g * brightness / 255;
-    ret.b = (uint16_t)b * brightness / 255;
+    ret.r = (uint16_t)(r * (brightness / 255));
+    ret.g = (uint16_t)(g * (brightness / 255));
+    ret.b = (uint16_t)(b * (brightness / 255));
 
     return ret;
 }

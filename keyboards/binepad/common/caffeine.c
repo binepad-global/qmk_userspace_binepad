@@ -3,7 +3,7 @@
 
 #include "quantum.h"
 #include "report.h"
-#include "common.h"
+#include "binepad_common.h"
 #include "caffeine.h"
 
 // needed for rand()
@@ -26,18 +26,18 @@ uint8_t caffeine_color_loop = 0;
 bool blink_on = false;            // Blink LED timer buffer
 uint32_t timer_blink_buffer = 0;  // Blink LED timer buffer
 
-    #ifndef CAFFEINE_BLINK_DELAY
-        #define CAFFEINE_BLINK_DELAY 1000
-    #endif  // CAFFEINE_BLINK_DELAY
+#    ifndef CAFFEINE_BLINK_DELAY
+#        define CAFFEINE_BLINK_DELAY 1000
+#    endif  // CAFFEINE_BLINK_DELAY
 
 #endif  // RGB_MATRIX_ENABLE
 
 #ifndef CAFFEINE_KEY_DELAY
-    #define CAFFEINE_KEY_DELAY 59000
+#    define CAFFEINE_KEY_DELAY 59000
 #endif  // CAFFEINE_KEY_DELAY
 
 #ifndef CAFFEINE_KEY_CODE
-    #define CAFFEINE_KEY_CODE KC_RIGHT_CTRL
+#    define CAFFEINE_KEY_CODE KC_RIGHT_CTRL
 #endif  // CAFFEINE_KEY_CODE
 
 void matrix_scan_caffeine(void) {
@@ -132,18 +132,6 @@ bool led_update_caffeine(led_t led_state) {
 
 #endif  // RGB_MATRIX_ENABLE
 
-// void keyboard_post_init_caffeine(void) {
-//     // #ifdef CONSOLE_ENABLE
-//     // dprint("f: keyboard_post_init_caffeine");
-//     // #endif
-// }
-
-// void eeconfig_init_caffeine(void) {
-//     // #ifdef CONSOLE_ENABLE
-//     // dprint("f: eeconfig_init_caffeine");
-//     // #endif
-// }
-
 bool caffeine_process_toggle_keycode(keyrecord_t *record) {
     if (!caffeine_init) __caffeine_init();
     if (record->event.pressed) {
@@ -159,10 +147,6 @@ bool caffeine_process_toggle_keycode(keyrecord_t *record) {
             caffeine_key_index = UINT8_MAX;
         }
     }
-
-    // #ifdef CONSOLE_ENABLE
-    // dprintf("function: __set_led_index, index: %u, value: %u \n", index, caffeine_key_index);
-    // #endif
 
     return false;
 }

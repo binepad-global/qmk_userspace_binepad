@@ -3,27 +3,18 @@
 
 #pragma once
 
+#include "quantum.h"
 #ifdef VIA_ENABLE // Only works if VIA is enabled
 #    include "color.h"
-#    define EEPROM_USER_CONFIG_ADDRESS (VIA_EEPROM_CUSTOM_CONFIG_ADDR + 1)
 #endif
 
 #ifdef CAFFEINE_ENABLE
 
 enum bnk9_keyboard {
-    KC_SPECIAL_1 = QK_KB_0,
-    KC_SPECIAL_2,
-    KC_SPECIAL_3,
-    KC_SPECIAL_4,
-    KC_SPECIAL_5,
-    KC_SPECIAL_6,
-    KC_SPECIAL_7,
-    KC_SPECIAL_8,
-    KC_SPECIAL_9,
-    KC_SPECIAL_10
+    KC_CAFFEINE_TOGGLE = QK_KB_0
 };
 
-#    define KC_CAFFEINE_TOGGLE KC_SPECIAL_1
+#define KC_COFFEE KC_CAFFEINE_TOGGLE
 
 #endif // CAFFEINE_ENABLE
 
@@ -34,10 +25,13 @@ typedef struct PACKED {
     uint8_t s;
 } HS;
 
-typedef struct {
-    HS color[9];
+typedef union {
+    uint8_t raw[18];
+    struct {
+        HS color[9];
+    };
 } user_config_t;
 
-extern user_config_t user_config;
+extern user_config_t g_user_config;
 
 #endif // VIA_ENABLE
