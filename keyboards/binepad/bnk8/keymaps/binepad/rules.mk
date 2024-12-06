@@ -4,9 +4,6 @@
 VIA_ENABLE = yes
 ENCODER_MAP_ENABLE = yes
 
-# EEPROM_DRIVER = wear_leveling
-# WEAR_LEVELING_DRIVER = rp2040_flash
-
 RGB_MATRIX_CUSTOM_KB = yes
 SRC += bnk8_effect.c
 
