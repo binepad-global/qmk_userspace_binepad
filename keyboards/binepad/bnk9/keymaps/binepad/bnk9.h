@@ -10,11 +10,9 @@
 
 #ifdef CAFFEINE_ENABLE
 
-enum bnk9_keyboard {
-    KC_CAFFEINE_TOGGLE = QK_KB_0
-};
+enum bnk9_keyboard { KC_CAFFEINE_TOGGLE = QK_KB_0 };
 
-#define KC_COFFEE KC_CAFFEINE_TOGGLE
+#    define KC_COFFEE KC_CAFFEINE_TOGGLE
 
 #endif // CAFFEINE_ENABLE
 

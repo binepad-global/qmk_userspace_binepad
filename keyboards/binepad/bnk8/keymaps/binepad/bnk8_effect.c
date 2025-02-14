@@ -11,9 +11,13 @@
 #    include "via.h"
 #    include "bnk8.h"
 
+// clang-format off
+
 #    define RGB_PER_KEY_DEFAULT_COLOR \
         { .h = RGB_MATRIX_DEFAULT_HUE, \
           .s = RGB_MATRIX_DEFAULT_SAT }
+
+#    define BNK8_CONFIG_EEPROM_ADDR (VIA_EEPROM_CUSTOM_CONFIG_ADDR)
 
 user_config_t g_user_config = {
     .color = {
@@ -30,6 +34,8 @@ user_config_t g_user_config = {
 enum via_per_key_value {
     id_custom_color = 1
 };
+
+// clang-format on
 
 // *** Helpers ***
 
@@ -62,15 +68,19 @@ void bnk8_config_get_value(uint8_t *data) {
 }
 
 void bnk8_config_load(void) {
+    // clang-format off
     eeprom_read_block( &g_user_config.raw,
-        EECONFIG_USER,
-        sizeof(user_config_t));
+        ((void*)BNK8_CONFIG_EEPROM_ADDR),
+        sizeof(user_config_t) );
+    // clang-format on
 }
 
 void bnk8_config_save(void) {
+    // clang-format off
     eeprom_update_block( &g_user_config.raw,
-        EECONFIG_USER,
-        sizeof(user_config_t));
+        ((void*)BNK8_CONFIG_EEPROM_ADDR),
+        sizeof(user_config_t) );
+    // clang-format on
 }
 
 void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
@@ -79,12 +89,12 @@ void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
     uint8_t *value_id_and_data = &(data[2]);
 
     if (*channel_id == id_custom_channel) {
-        switch ( *command_id ) {
+        switch (*command_id) {
             case id_custom_set_value:
-                bnk8_config_set_value( value_id_and_data );
+                bnk8_config_set_value(value_id_and_data);
                 break;
             case id_custom_get_value:
-                bnk8_config_get_value( value_id_and_data );
+                bnk8_config_get_value(value_id_and_data);
                 break;
             case id_custom_save:
                 bnk8_config_save();

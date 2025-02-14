@@ -10,11 +10,9 @@
 
 #ifdef CAFFEINE_ENABLE
 
-enum bnk8_keyboard {
-    KC_CAFFEINE_TOGGLE = QK_KB_0
-};
+enum bnk8_keyboard { KC_CAFFEINE_TOGGLE = QK_KB_0 };
 
-#define KC_COFFEE KC_CAFFEINE_TOGGLE
+#    define KC_COFFEE KC_CAFFEINE_TOGGLE
 
 #endif // CAFFEINE_ENABLE
 
@@ -28,7 +26,7 @@ typedef struct PACKED {
 typedef union {
     uint8_t raw[16];
     struct {
-      HS color[8];
+        HS color[8];
     };
 } user_config_t;
 

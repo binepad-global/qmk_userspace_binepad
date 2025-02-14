@@ -12,7 +12,7 @@
 
 #ifdef CONSOLE_ENABLE
 // #   include "print.h"
-#   error CONSOLE_ENABLE is ON!
+#    error CONSOLE_ENABLE is ON!
 #endif
 
 #define COFFEE KC_CAFFEINE_TOGGLE
