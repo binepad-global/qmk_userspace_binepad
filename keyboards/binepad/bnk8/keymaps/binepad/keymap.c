@@ -4,6 +4,7 @@
 #include QMK_KEYBOARD_H
 
 #include "binepad_common.h"
+#include "bug_workarounds.h"
 #include "bnk8.h"
 
 #ifdef CAFFEINE_ENABLE
@@ -34,9 +35,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_P6,    KC_P7,    LT(1, KC_P8)
     ),
     [1] = LAYOUT_ortho_3x3(
-        RM_HUEU, RM_SATU, RM_SPDU,
-        RM_HUED, RM_SATD, RM_SPDD,
-        RM_TOGG, RM_NEXT, _______
+        // RM_HUEU, RM_SATU, RM_SPDU,
+        // RM_HUED, RM_SATD, RM_SPDD,
+        // RM_TOGG, RM_NEXT, _______
+        RGB_HUI, RGB_SAI, RGB_SPI,
+        RGB_HUD, RGB_SAD, RGB_SPD,
+        RGB_TOG, RGB_MOD, _______
     )
 };
 // clanf-format on
@@ -46,7 +50,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clanf-format off
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [1] = { ENCODER_CCW_CW(RM_VALD, RM_VALU) }
+    // [1] = { ENCODER_CCW_CW(RM_VALD, RM_VALU) }
+    [1] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) }
 };
 // clanf-format on
 
@@ -104,6 +109,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // #ifdef CONSOLE_ENABLE
     // dprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
     // #endif
+
+    if (!process_record_bugfixes(keycode, record)) {
+        return false;
+    }
 
     switch (keycode) {
         #ifdef CAFFEINE_ENABLE

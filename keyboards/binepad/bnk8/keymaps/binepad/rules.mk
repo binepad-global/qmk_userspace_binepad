@@ -14,6 +14,7 @@ CAFFEINE_ENABLE = yes
 
 VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
 SRC += binepad_common.c
+SRC += bug_workarounds.c
 
 ifeq ($(strip $(CAFFEINE_ENABLE)), yes)
     SRC += caffeine.c
