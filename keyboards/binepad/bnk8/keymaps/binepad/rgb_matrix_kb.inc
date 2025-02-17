@@ -1,6 +1,10 @@
 // Copyright 2024 Binepad (@binpad)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#ifndef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#    error "This does not work without RGB_MATRIX_CUSTOM_KB"
+#endif
+
 #ifdef VIA_ENABLE
 
 // Declare custom effects using the RGB_MATRIX_EFFECT macro

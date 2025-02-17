@@ -3,7 +3,7 @@
 
 #include "quantum.h"
 
-#ifdef VIA_ENABLE // Only works if VIA is enabled
+#if defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE) // Only works if VIA is enabled
 
 #    include "color.h"
 #    include "progmem.h"
@@ -121,4 +121,6 @@ void via_init_kb(void) {
     }
 }
 
+#else
+#    error "This does not work without RGB_MATRIX_CUSTOM_KB & VIA_ENABLE"
 #endif // VIA_ENABLE
