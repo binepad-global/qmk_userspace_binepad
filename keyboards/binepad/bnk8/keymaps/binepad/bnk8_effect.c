@@ -3,7 +3,7 @@
 
 #include "quantum.h"
 
-#ifdef defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE) // Only works if VIA is enabled
+#if defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE) // Only works if VIA is enabled
 
 #    include "color.h"
 #    include "progmem.h"
@@ -121,5 +121,48 @@ void via_init_kb(void) {
 }
 
 #else
-#    error "This does not work without RGB_MATRIX_CUSTOM_KB & VIA_ENABLE"
-#endif // VIA_ENABLE
+#    ifdef VIA_ENABLE
+
+#        include "via.h"
+#        define id_custom_color 1
+
+void bnk9_dummy_get_value(uint8_t *data) {
+    uint8_t *value_id   = &(data[0]);
+    uint8_t *value_data = &(data[1]);
+
+    switch (*value_id) {
+        case id_custom_color: {
+            value_data[1] = 0;
+            value_data[2] = 0;
+            break;
+        }
+    }
+}
+
+void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
+    uint8_t *command_id        = &(data[0]);
+    uint8_t *channel_id        = &(data[1]);
+    uint8_t *value_id_and_data = &(data[2]);
+
+    if (*channel_id == id_custom_channel) {
+        switch (*command_id) {
+            case id_custom_get_value:
+                bnk9_dummy_get_value(value_id_and_data);
+                break;
+            case id_custom_set_value:
+            case id_custom_save:
+                // do nothing - stops from returning id_unhandled
+                break;
+            default:
+                // Unhandled message.
+                *command_id = id_unhandled;
+                break;
+        }
+        return;
+    }
+
+    *command_id = id_unhandled;
+}
+
+#    endif
+#endif
