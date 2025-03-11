@@ -6,6 +6,7 @@
 #include "binepad_common.h"
 
 #include "color.h"
+#include "version.h"
 
 RGB adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_t min, uint8_t max) {
     RGB ret = {r : 0, g : 0, b : 0};
@@ -19,6 +20,46 @@ RGB adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_t min, uint8_t m
     ret.b = (uint16_t)(b * (brightness / 255));
 
     return ret;
+}
+
+bool process_record_binepad(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case QK_KB_9:
+            if (record->event.pressed) {
+                SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+            }
+            return false;
+            break;
+
+#ifdef RGB_MATRIX_ENABLE
+        case QK_CLEAR_EEPROM:
+            if (record->event.pressed) {
+                if (!rgb_matrix_is_enabled()) {
+                    rgb_matrix_enable();
+                }
+                rgb_matrix_set_color_all(RGB_YELLOW);
+                rgb_matrix_update_pwm_buffers();
+                wait_ms(500); // 1/2 sec
+            }
+            return true; // let QMK do the rest
+            break;
+
+        case QK_BOOT:
+            if (record->event.pressed) {
+                if (!rgb_matrix_is_enabled()) {
+                    rgb_matrix_enable();
+                }
+                rgb_matrix_set_color_all(RGB_RED);
+                rgb_matrix_update_pwm_buffers();
+                wait_ms(500); // 1/2 sec
+            }
+            return true; // let QMK do the rest
+            break;
+#endif
+
+        default:
+            return true; // Process all other keycodes normally
+    }
 }
 
 // uint16_t find_key_index(uint16_t target_keycode) {

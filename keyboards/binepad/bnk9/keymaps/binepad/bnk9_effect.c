@@ -3,39 +3,38 @@
 
 #include "quantum.h"
 
-#if defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE) // Only works if VIA is enabled
+#if defined(RGB_MATRIX_CUSTOM_KB) && defined(VIA_ENABLE) // Only works if VIA is enabled
 
 #    include "color.h"
 #    include "progmem.h"
 #    include "eeprom.h"
-#    include "via.h"
 #    include "bnk9.h"
 
 // clang-format off
-
 #    define RGB_PER_KEY_DEFAULT_COLOR \
         { .h = RGB_MATRIX_DEFAULT_HUE, \
           .s = RGB_MATRIX_DEFAULT_SAT }
+// clang-format on
 
 #    define BNK9_CONFIG_EEPROM_ADDR (VIA_EEPROM_CUSTOM_CONFIG_ADDR)
 
+#    if VIA_EEPROM_CUSTOM_CONFIG_SIZE == 0
+#        error VIA_EEPROM_CUSTOM_CONFIG_SIZE was not defined to store user_config struct
+#    endif
+
+// clang-format off
 user_config_t g_user_config = {
     .color = {
         RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR,
-        RGB_PER_KEY_DEFAULT_COLOR
+        {.h = 30, .s = 255},
+        {.h = 60, .s = 255},
+        {.h = 90, .s = 255},
+        {.h = 120, .s = 255},
+        {.h = 150, .s = 255},
+        {.h = 180, .s = 255},
+        {.h = 210, .s = 255},
+        {.h = 240, .s = 255}
     } };
-
-enum via_per_key_value {
-    id_custom_color = 1
-};
-
 // clang-format on
 
 // *** Helpers ***
@@ -69,19 +68,11 @@ void bnk9_config_get_value(uint8_t *data) {
 }
 
 void bnk9_config_load(void) {
-    // clang-format off
-    eeprom_read_block( &g_user_config,
-        ((void*)BNK9_CONFIG_EEPROM_ADDR),
-        sizeof(user_config_t));
-    // clang-format on
+    eeprom_read_block( &g_user_config, ((void*)BNK9_CONFIG_EEPROM_ADDR), sizeof(user_config_t));
 }
 
 void bnk9_config_save(void) {
-    // clang-format off
-    eeprom_update_block( &g_user_config,
-        ((void*)BNK9_CONFIG_EEPROM_ADDR),
-        sizeof(user_config_t));
-    // clang-format on
+    eeprom_update_block( &g_user_config, ((void*)BNK9_CONFIG_EEPROM_ADDR), sizeof(user_config_t));
 }
 
 void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
@@ -125,7 +116,6 @@ void via_init_kb(void) {
 #    ifdef VIA_ENABLE
 
 #        include "via.h"
-#        define id_custom_color 1
 
 void bnk9_dummy_get_value(uint8_t *data) {
     uint8_t *value_id   = &(data[0]);
@@ -165,5 +155,5 @@ void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
     *command_id = id_unhandled;
 }
 
-#    endif
-#endif
+#    endif // VIA_ENABLE
+#endif // RGB_MATRIX_CUSTOM_KB

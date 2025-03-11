@@ -1,24 +1,24 @@
 // Copyright 2024 Binepad (@binpad)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#ifndef RGB_MATRIX_CUSTOM_KB
 #    error "This does not work without RGB_MATRIX_CUSTOM_KB"
 #endif
 
-#ifdef VIA_ENABLE
-
 // Declare custom effects using the RGB_MATRIX_EFFECT macro
 RGB_MATRIX_EFFECT(bnk8_per_key_effect)
+RGB_MATRIX_EFFECT(bnk8_per_layer_effect)
 
-#    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#if defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE)
 
-#        include "eeprom.h"
-#        include "eeconfig.h"
-#        include "via.h"
-#        include "bnk8.h"
+// #    include "eeprom.h"
+// #    include "eeconfig.h"
+// #    include "via.h"
+#    include "bnk8.h"
 
-// Per-key color effect
-
+/**
+ * Per-key color effect
+ */
 static bool bnk8_per_key_effect(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
     HSV hsv;
@@ -39,5 +39,22 @@ static bool bnk8_per_key_effect(effect_params_t* params) {
     return rgb_matrix_check_finished_leds(led_max);
 }
 
-#    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#endif     // VIA_ENABLE
+/*
+ * Per-layer effect
+ */
+static bool bnk8_per_layer_effect(effect_params_t* params) {
+    RGB_MATRIX_USE_LIMITS(led_min, led_max);
+    HSV hsv;
+    RGB rgb;
+
+    uint8_t i = get_highest_layer(layer_state) % 8; // 8 = how many colors stored in g_user_config
+    hsv.h     = g_user_config.color[i].h;
+    hsv.s     = g_user_config.color[i].s;
+    hsv.v     = rgb_matrix_get_val();
+    rgb       = hsv_to_rgb(hsv);
+    rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
+
+    return rgb_matrix_check_finished_leds(led_max);
+}
+
+#endif

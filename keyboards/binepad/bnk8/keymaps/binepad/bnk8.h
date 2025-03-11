@@ -8,15 +8,27 @@
 #    include "color.h"
 #endif
 
+// clang-format off
+enum bnk8_keyboard {
+    #ifdef CAFFEINE_ENABLE
+    KC_CAFFEINE_TOGGLE = QK_KB_0,
+    #endif // CAFFEINE_ENABLE
+    KC_LAYER_SELECTOR = QK_KB_1
+};
+// clang-format on
+
+#define KC_LAYER KC_LAYER_SELECTOR
 #ifdef CAFFEINE_ENABLE
-
-enum bnk8_keyboard { KC_CAFFEINE_TOGGLE = QK_KB_0 };
-
 #    define KC_COFFEE KC_CAFFEINE_TOGGLE
-
 #endif // CAFFEINE_ENABLE
 
 #ifdef VIA_ENABLE // Only works if VIA is enabled
+
+// clang-format off
+enum via_per_key_value {
+    id_custom_color = 1
+};
+// clang-format on
 
 typedef struct PACKED {
     uint8_t h;

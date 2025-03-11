@@ -4,9 +4,6 @@
 #include QMK_KEYBOARD_H
 
 #include "binepad_common.h"
-#ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#    include "bug_workarounds.h"
-#endif
 #include "bnk9.h"
 
 #ifdef CAFFEINE_ENABLE
@@ -14,8 +11,12 @@
 #endif // CAFFEINE_ENABLE
 
 #ifdef CONSOLE_ENABLE
-// #   include "print.h"
-#    error CONSOLE_ENABLE is ON!
+#   include "print.h"
+// #    error CONSOLE_ENABLE is ON!
+#endif
+
+#ifdef CAFFEINE_ENABLE
+#    define COFFEE KC_CAFFEINE_TOGGLE
 #endif
 
 // clang-format off
@@ -94,15 +95,15 @@ bool led_update_user(led_t led_state) {
 // }
 
 void matrix_scan_user(void) {
-#    ifdef CAFFEINE_ENABLE
+    #ifdef CAFFEINE_ENABLE
     matrix_scan_caffeine();
-#    endif
+    #endif
 }
 
 void housekeeping_task_user(void) {
-#    ifdef CAFFEINE_ENABLE
+    #ifdef CAFFEINE_ENABLE
     housekeeping_task_caffeine();
-#    endif
+    #endif
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -110,21 +111,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // dprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
     // #endif
 
-#    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-    if (!process_record_bugfixes(keycode, record)) {
-        return false;
-    }
-#    endif
-
     switch (keycode) {
-#    ifdef CAFFEINE_ENABLE
+        #ifdef CAFFEINE_ENABLE
         case KC_CAFFEINE_TOGGLE:
             return caffeine_process_toggle_keycode(record);
             break;
-#    endif
+        #endif
+
         default:
             break;
     }
+
+    if (!process_record_binepad(keycode, record)) {
+        return false;
+    }
+
     return true;
 }
 

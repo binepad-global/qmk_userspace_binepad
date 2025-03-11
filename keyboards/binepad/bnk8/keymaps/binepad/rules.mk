@@ -7,12 +7,11 @@ ENCODER_MAP_ENABLE = yes
 # CONSOLE_ENABLE = yes  ## for debugging!
 # COMMAND_ENABLE = yes
 
-RGB_MATRIX_CUSTOM_KB = no  # temp. disable while VIA gets fixed
+RGB_MATRIX_CUSTOM_KB = yes
 CAFFEINE_ENABLE = yes
 
 VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
 SRC += binepad_common.c
-SRC += bug_workarounds.c
 SRC += bnk8_effect.c
 
 ifeq ($(strip $(CAFFEINE_ENABLE)), yes)
