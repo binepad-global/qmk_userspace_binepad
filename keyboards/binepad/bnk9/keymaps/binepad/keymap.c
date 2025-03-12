@@ -72,13 +72,6 @@ bool rgb_matrix_indicators_user(void) {
     return true;
 }
 
-bool led_update_user(led_t led_state) {
-#        ifdef CAFFEINE_ENABLE
-    if (!led_update_caffeine(led_state)) return false;
-#        endif
-    return true;
-}
-
 #    endif // RGB_MATRIX_ENABLE
 
 // void keyboard_post_init_user(void) {

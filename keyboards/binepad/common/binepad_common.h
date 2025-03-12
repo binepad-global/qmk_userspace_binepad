@@ -7,7 +7,9 @@
 #include <stdbool.h>
 #include "action.h"
 
+#if defined(RGB_MATRIX_ENABLE) || defined(RGB_LIGHT_ENABLE)
 RGB adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_t min, uint8_t max);
+#endif
 
 // uint16_t find_key_index(uint16_t target_keycode);
 

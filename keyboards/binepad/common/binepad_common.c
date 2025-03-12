@@ -8,10 +8,16 @@
 #include "color.h"
 #include "version.h"
 
+#if defined(RGB_MATRIX_ENABLE) || defined(RGB_LIGHT_ENABLE)
 RGB adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_t min, uint8_t max) {
     RGB ret = {r : 0, g : 0, b : 0};
 
+#    ifdef RGB_MATRIX_ENABLE
+    uint8_t brightness = rgb_matrix_get_val();
+#    endif
+#    ifdef RGB_LIGHT_ENABLE
     uint8_t brightness = rgblight_get_val();
+#    endif
     if (brightness > max) brightness = max;
     if (brightness < min) brightness = min;
 
@@ -21,12 +27,13 @@ RGB adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_t min, uint8_t m
 
     return ret;
 }
+#endif
 
 bool process_record_binepad(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case QK_KB_9:
+        case QK_KB_9: // `CUSTOM(9)` in VIA app
             if (record->event.pressed) {
-                SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+                SEND_STRING(QMK_KEYBOARD ":" QMK_KEYMAP " @ " QMK_VERSION " [" QMK_BUILDDATE "]");
             }
             return false;
             break;

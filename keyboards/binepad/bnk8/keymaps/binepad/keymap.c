@@ -71,13 +71,6 @@ bool rgb_matrix_indicators_user(void) {
     return true;
 }
 
-bool led_update_user(led_t led_state) {
-#        ifdef CAFFEINE_ENABLE
-    if (!led_update_caffeine(led_state)) return false;
-#        endif
-    return true;
-}
-
 #    endif // RGB_MATRIX_ENABLE
 
 // void keyboard_post_init_user(void) {
@@ -95,15 +88,15 @@ bool led_update_user(led_t led_state) {
 // }
 
 void matrix_scan_user(void) {
-    #ifdef CAFFEINE_ENABLE
+#    ifdef CAFFEINE_ENABLE
     matrix_scan_caffeine();
-    #endif
+#    endif
 }
 
 void housekeeping_task_user(void) {
-    #ifdef CAFFEINE_ENABLE
+#    ifdef CAFFEINE_ENABLE
     housekeeping_task_caffeine();
-    #endif
+#    endif
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -123,11 +116,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        #ifdef CAFFEINE_ENABLE
+#    ifdef CAFFEINE_ENABLE
         case KC_CAFFEINE_TOGGLE:
             return caffeine_process_toggle_keycode(record);
             break;
-        #endif
+#    endif
 
         default:
             break;
