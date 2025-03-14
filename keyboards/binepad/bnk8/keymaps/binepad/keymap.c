@@ -6,6 +6,10 @@
 #include "binepad_common.h"
 #include "bnk8.h"
 
+#ifdef VIAL_PROTOCOL_VERSION
+#    error "This keymap is not intended for VIAL. Please use QMK."
+#endif
+
 #ifdef CAFFEINE_ENABLE
 #    include "caffeine.h"
 #endif // CAFFEINE_ENABLE
@@ -99,6 +103,8 @@ void housekeeping_task_user(void) {
 #    endif
 }
 
+#endif // All the optionals
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // #ifdef CONSOLE_ENABLE
     // dprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
@@ -126,11 +132,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
     }
 
+    // call into binepad_common.c
     if (!process_record_binepad(keycode, record)) {
         return false;
     }
-
     return true;
 }
-
-#endif // All the optionals
