@@ -4,6 +4,8 @@
 VIA_ENABLE = yes
 ENCODER_MAP_ENABLE = yes
 
+MIDI_ENABLE = yes
+
 # CONSOLE_ENABLE = yes  ## for debugging!
 # COMMAND_ENABLE = yes
 

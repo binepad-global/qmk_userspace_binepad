@@ -6,6 +6,10 @@
 #include "binepad_common.h"
 #include "bnk9.h"
 
+#ifdef VIAL_PROTOCOL_VERSION
+#    error "This keymap is not intended for VIAL. Please use QMK."
+#endif
+
 #ifdef CAFFEINE_ENABLE
 #    include "caffeine.h"
 #endif // CAFFEINE_ENABLE
