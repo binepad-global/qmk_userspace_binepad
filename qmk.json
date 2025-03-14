@@ -1,7 +1,13 @@
 {
     "userspace_version": "1.0",
     "build_targets": [
+        ["binepad/bn003", "binepad"],
+        ["binepad/bn006", "binepad"],
+        ["binepad/bn009", "binepad"],
+        ["binepad/bnk8", "binepad"],
         ["binepad/bnk9", "binepad"],
-        ["binepad/bnk8", "binepad"]
+        ["binepad/bnr1", "binepad"],
+        ["binepad/kn01", "binepad"],
+        ["binepad/pixie", "binepad"]
     ]
 }
