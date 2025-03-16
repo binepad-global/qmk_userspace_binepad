@@ -11,3 +11,8 @@
 *.uf2
 
 .vscode/*
+
+# clangd
+compile_commands.json
+.clangd/
+.cache/
