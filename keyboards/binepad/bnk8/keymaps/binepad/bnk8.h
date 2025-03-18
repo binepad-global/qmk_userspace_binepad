@@ -10,17 +10,11 @@
 
 // clang-format off
 enum bnk8_keyboard {
-    #ifdef CAFFEINE_ENABLE
     KC_CAFFEINE_TOGGLE = QK_KB_0,
-    #endif // CAFFEINE_ENABLE
-    KC_LAYER_SELECTOR = QK_KB_1
+    KC_APPLE_GLOBE = QK_KB_1,
+    KC_PRINT_VERSION = QK_KB_9
 };
 // clang-format on
-
-#define KC_LAYER KC_LAYER_SELECTOR
-#ifdef CAFFEINE_ENABLE
-#    define KC_COFFEE KC_CAFFEINE_TOGGLE
-#endif // CAFFEINE_ENABLE
 
 #ifdef VIA_ENABLE // Only works if VIA is enabled
 
