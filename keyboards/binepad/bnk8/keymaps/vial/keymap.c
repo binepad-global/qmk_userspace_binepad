@@ -5,18 +5,18 @@
 
 // #include "binepad_common.h"
 #include "bnk8.h"
+#include "community_modules.h"
 
-#ifdef VIAL_PROTOCOL_VERSION
-#    error "This keymap is not intended for VIAL. Please use QMK."
-#endif
-
-#ifdef CONSOLE_ENABLE
-#    include "print.h"
-// #    error CONSOLE_ENABLE is ON!
+#if defined(COMMUNITY_MODULE_VERSION_ENABLE) || defined(COMMUNITY_MODULE_CAFFEINE_ENABLE) || defined(COMMUNITY_MODULE_GLOBE_KEY_ENABLE)
+#    include "community_modules_hack.h"
 #endif
 
 #ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
 #    include "caffeine.h"
+#endif
+
+#ifndef VIAL_PROTOCOL_VERSION
+#    error "This keymap is only intended for VIAL. Please use VIAL-QMK."
 #endif
 
 // clang-format off
@@ -42,7 +42,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RGB_HUI, RGB_SAI, RGB_SPI,
         RGB_HUD, RGB_SAD, RGB_SPD,
         RGB_TOG, RGB_MOD, _______
-    )
+    ),
+    [2] = LAYOUT_ortho_3x3( _______, _______, _______, _______, _______, _______, _______, _______, _______ ),
+    [3] = LAYOUT_ortho_3x3( _______, _______, _______, _______, _______, _______, _______, _______, _______ ),
+    [4] = LAYOUT_ortho_3x3( _______, _______, _______, _______, _______, _______, _______, _______, _______ ),
+    [5] = LAYOUT_ortho_3x3( _______, _______, _______, _______, _______, _______, _______, _______, _______ ),
+    [6] = LAYOUT_ortho_3x3( _______, _______, _______, _______, _______, _______, _______, _______, _______ ),
+    [7] = LAYOUT_ortho_3x3( _______, _______, _______, _______, _______, _______, _______, _______, _______ )
 };
 // clang-format on
 
@@ -50,8 +56,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format off
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    // [1] = { ENCODER_CCW_CW(RM_VALD, RM_VALU) }
-    [1] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) }
+    // [1] = { ENCODER_CCW_CW(RM_VALD, RM_VALU) },
+    [1] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
+    [2] = { ENCODER_CCW_CW(_______, _______) },
+    [3] = { ENCODER_CCW_CW(_______, _______) },
+    [4] = { ENCODER_CCW_CW(_______, _______) },
+    [5] = { ENCODER_CCW_CW(_______, _______) },
+    [6] = { ENCODER_CCW_CW(_______, _______) },
+    [7] = { ENCODER_CCW_CW(_______, _______) }
 };
 // clang-format on
 #endif // ENCODER_MAP_ENABLE
@@ -74,8 +86,6 @@ void matrix_scan_user(void) {
 //     housekeeping_task_caffeine();
 // }
 
-#else
-#    error "This build requires COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE"
 #endif // All the optionals
 
 /* !! : Only needed when debugging
@@ -91,12 +101,32 @@ void keyboard_post_init_user(void) {
 */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
+    if (!process_record_caffeine(keycode, record)) {
+        return false;
+    }
+#endif
+
+#ifdef COMMUNITY_MODULE_GLOBE_KEY_ENABLE
+    if (!process_record_globe_key(keycode, record)) {
+        return false;
+    }
+#endif
+
+#ifdef COMMUNITY_MODULE_VERSION_ENABLE
+    if (!process_record_version(keycode, record)) {
+        return false;
+    }
+#endif
+
     switch (keycode) {
 #ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
         // !! : no, it's not duplication, this is for VIA keymaps
         case KC_CAFFEINE_TOGGLE:
             return process_keycode_caffeine_toggle(record);
             break;
+#else
+#    error
 #endif
 
 #ifdef COMMUNITY_MODULE_GLOBE_KEY_ENABLE

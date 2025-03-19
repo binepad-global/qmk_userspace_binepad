@@ -9,5 +9,5 @@ ENCODER_MAP_ENABLE = yes
 
 RGB_MATRIX_CUSTOM_KB = yes
 
-VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
+# VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
 SRC += bnk8_effect.c
