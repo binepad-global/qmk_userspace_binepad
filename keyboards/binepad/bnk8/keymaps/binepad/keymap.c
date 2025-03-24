@@ -3,7 +3,6 @@
 
 #include QMK_KEYBOARD_H
 
-// #include "binepad_common.h"
 #include "bnk8.h"
 
 #ifdef VIAL_PROTOCOL_VERSION
@@ -17,6 +16,7 @@
 
 #ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
 #    include "caffeine.h"
+#    define KC_CAFF KC_CAFFEINE_TOGGLE
 #endif
 
 // clang-format off
@@ -80,13 +80,13 @@ void matrix_scan_user(void) {
 
 /* !! : Only needed when debugging
 void keyboard_post_init_user(void) {
-    #ifdef CONSOLE_ENABLE
+#ifdef CONSOLE_ENABLE
     // Customise these values to desired behaviour
     debug_enable = true;
-    // debug_matrix = true;
-    // debug_keyboard=true;
-    // debug_mouse=true;
-    #endif
+// debug_matrix = true;
+// debug_keyboard=true;
+// debug_mouse=true;
+#endif
 }
 */
 
