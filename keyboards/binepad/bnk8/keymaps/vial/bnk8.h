@@ -1,4 +1,4 @@
-// Copyright 2025 binepad (@binepad)
+// Copyright 2024 binepad (@binepad)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once

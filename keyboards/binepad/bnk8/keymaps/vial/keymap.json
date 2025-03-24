@@ -1,0 +1,8 @@
+{
+    "modules": [
+        "binepad/common",
+        "silvinor/version",
+        "silvinor/caffeine",
+        "tzarc/globe_key"
+    ]
+}
