@@ -24,7 +24,6 @@ enum via_per_key_value {
 };
 // clang-format on
 
-
 typedef struct PACKED {
     uint8_t h;
     uint8_t s;
