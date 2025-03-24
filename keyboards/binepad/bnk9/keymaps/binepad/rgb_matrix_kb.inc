@@ -15,7 +15,7 @@ RGB_MATRIX_EFFECT(bnk9_per_key_effect)
 // #        include "via.h"
 #        include "bnk9.h"
 
-/*
+/**
  * Per-key color effect
  */
 static bool bnk9_per_key_effect(effect_params_t* params) {
@@ -23,7 +23,7 @@ static bool bnk9_per_key_effect(effect_params_t* params) {
     HSV hsv;
     RGB rgb;
 
-    // Assuming `user_config` is set prior
+    // Assuming `g_user_config` is set prior
 
     hsv.v = rgb_matrix_get_val();
     for (uint8_t i = led_min; i < led_max; i++) {

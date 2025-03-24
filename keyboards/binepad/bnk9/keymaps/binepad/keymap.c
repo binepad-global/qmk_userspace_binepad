@@ -3,24 +3,20 @@
 
 #include QMK_KEYBOARD_H
 
-#include "binepad_common.h"
 #include "bnk9.h"
 
 #ifdef VIAL_PROTOCOL_VERSION
 #    error "This keymap is not intended for VIAL. Please use QMK."
 #endif
 
-#ifdef CAFFEINE_ENABLE
-#    include "caffeine.h"
-#endif // CAFFEINE_ENABLE
-
 #ifdef CONSOLE_ENABLE
-#   include "print.h"
+#    include "print.h"
 // #    error CONSOLE_ENABLE is ON!
 #endif
 
-#ifdef CAFFEINE_ENABLE
-#    define COFFEE KC_CAFFEINE_TOGGLE
+#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
+#    include "caffeine.h"
+#    define KC_CAFF KC_CAFFEINE_TOGGLE
 #endif
 
 // clang-format off
@@ -53,77 +49,68 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 #ifdef ENCODER_MAP_ENABLE
-
 // clang-format off
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [1] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) }
 };
 // clang-format on
-
 #endif // ENCODER_MAP_ENABLE
 
 // ---------- Optional Add-ons -----------
 
-#if defined(CAFFEINE_ENABLE) // && && &&  ... All the optionals
-
-#    ifdef RGB_MATRIX_ENABLE
+#if defined(COMMUNITY_MODULE_CAFFEINE_ENABLE) && defined(COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE)
 
 bool rgb_matrix_indicators_user(void) {
-#        ifdef CAFFEINE_ENABLE
     if (!rgb_matrix_indicators_caffeine()) return false;
-#        endif
     return true;
 }
-
-#    endif // RGB_MATRIX_ENABLE
-
-// void keyboard_post_init_user(void) {
-//     // #ifdef CONSOLE_ENABLE
-//     // // Customise these values to desired behaviour
-//     // debug_enable = true;
-//     // // debug_matrix = true;
-//     // // debug_keyboard=true;
-//     // // debug_mouse=true;
-//     // #endif
-// }
-
-// void eeconfig_init_user(void) {
-// }
 
 void matrix_scan_user(void) {
-    #ifdef CAFFEINE_ENABLE
     matrix_scan_caffeine();
-    #endif
 }
 
-void housekeeping_task_user(void) {
-    #ifdef CAFFEINE_ENABLE
-    housekeeping_task_caffeine();
-    #endif
+// !! : Not needed when used as a module
+// void housekeeping_task_user(void) {
+//     housekeeping_task_caffeine();
+// }
+
+#else
+#    error "This build requires COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE"
+#endif // All the optionals
+
+/* !! : Only needed when debugging
+void keyboard_post_init_user(void) {
+#ifdef CONSOLE_ENABLE
+    // Customise these values to desired behaviour
+    debug_enable = true;
+    // debug_matrix = true;
+    // debug_keyboard=true;
+    // debug_mouse=true;
+#endif
 }
+*/
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // #ifdef CONSOLE_ENABLE
-    // dprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-    // #endif
-
     switch (keycode) {
-        #ifdef CAFFEINE_ENABLE
+#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
+        // !! : no, it's not duplication, this is for VIA keymaps
         case KC_CAFFEINE_TOGGLE:
-            return caffeine_process_toggle_keycode(record);
+            return process_keycode_caffeine_toggle(record);
             break;
-        #endif
+#endif
 
-        default:
+#ifdef COMMUNITY_MODULE_GLOBE_KEY_ENABLE
+        case KC_APPLE_GLOBE:
+            return process_record_globe_key(KC_GLOBE, record);
             break;
-    }
+#endif
 
-    if (!process_record_binepad(keycode, record)) {
-        return false;
+#ifdef COMMUNITY_MODULE_VERSION_ENABLE
+        case KC_PRINT_VERSION:
+            return process_record_version(COMMUNITY_MODULE_SEND_VERSION, record);
+            break;
+#endif
     }
-
     return true;
 }
-
-#endif // All the optionals
