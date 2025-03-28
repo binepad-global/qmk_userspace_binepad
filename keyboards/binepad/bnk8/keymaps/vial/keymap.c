@@ -36,12 +36,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_P6,    KC_P7,    LT(1, KC_P8)
     ),
     [1] = LAYOUT_ortho_3x3(
-        // RM_HUEU, RM_SATU, RM_SPDU,
-        // RM_HUED, RM_SATD, RM_SPDD,
-        // RM_TOGG, RM_NEXT, _______
-        RGB_HUI, RGB_SAI, RGB_SPI,
-        RGB_HUD, RGB_SAD, RGB_SPD,
-        RGB_TOG, RGB_MOD, _______
+        RM_HUEU, RM_SATU, RM_SPDU,
+        RM_HUED, RM_SATD, RM_SPDD,
+        RM_TOGG, RM_NEXT, _______
+        // RGB_HUI, RGB_SAI, RGB_SPI,
+        // RGB_HUD, RGB_SAD, RGB_SPD,
+        // RGB_TOG, RGB_MOD, _______
     )
 };
 // clang-format on
@@ -50,8 +50,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format off
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    // [1] = { ENCODER_CCW_CW(RM_VALD, RM_VALU) }
-    [1] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) }
+    [1] = { ENCODER_CCW_CW(RM_VALD, RM_VALU) }
+    // [1] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) }
 };
 // clang-format on
 #endif // ENCODER_MAP_ENABLE
