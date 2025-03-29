@@ -5,8 +5,8 @@
     "matrix": {"rows": 3, "cols": 3},
     "keycodes": ["qmk_lighting"],
     "customKeycodes": [
-        {"name": "Caffeine", "title": "Host machine keep awake", "shortName": "KC_COFFEE"},
-        {"name": "Layer", "title": "Walk through the layers", "shortName": "KC_LAYER"}
+        {"name": "Caffeine", "title": "Host machine keep awake", "shortName": "Caff"},
+        {"name": "Layer", "title": "Step through the layers", "shortName": "Layer"}
     ],
     "menus": [
         {

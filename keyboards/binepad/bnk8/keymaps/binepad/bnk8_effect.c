@@ -29,7 +29,7 @@
 #define _S__(s)  ((uint8_t)((s) * 255 / 100))  // Convert saturation (0-100) to (0-255))
 
 user_config_t g_user_config = {
-    .color = {                            // rainbow, sort-of
+    .color = {                            // rainbow, ... sort-of
         RGB_PER_KEY_DEFAULT_COLOR,        // #ff0000
         {.h = _H__(39), .s = _S__(100)},  // #ffa500
         {.h = _H__(58), .s = _S__(100)},  // #fff600
@@ -39,7 +39,7 @@ user_config_t g_user_config = {
         {.h = _H__(270), .s = _S__(100)}, // #7f00ff
         {.h = _H__(315), .s = _S__(100)}  // #ff00bf
     },
-    .lyrclr = {                           // rainbow, sort-of
+    .lyrclr = {
         RGB_PER_KEY_DEFAULT_COLOR,        // #ff0000
         {.h = _H__(39), .s = _S__(100)},  // #ffa500
         {.h = _H__(58), .s = _S__(100)},  // #fff600
@@ -67,7 +67,7 @@ void bnk8_config_set_value(uint8_t *data) {
             break;
         }
         case id_custom_lyrclr: {
-            uint8_t i                = value_data[0];
+            uint8_t i                 = value_data[0];
             g_user_config.lyrclr[i].h = value_data[1];
             g_user_config.lyrclr[i].s = value_data[2];
             break;
