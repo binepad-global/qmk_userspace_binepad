@@ -39,7 +39,7 @@ static bool bnk8_per_key_effect(effect_params_t* params) {
     return rgb_matrix_check_finished_leds(led_max);
 }
 
-/*
+/**
  * Per-layer effect
  */
 static bool bnk8_per_layer_effect(effect_params_t* params) {
