@@ -7,6 +7,7 @@
 
 // Declare custom effects using the RGB_MATRIX_EFFECT macro
 RGB_MATRIX_EFFECT(bnk9_per_key_effect)
+RGB_MATRIX_EFFECT(bnk8_per_layer_effect)
 
 #if defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE)
 
@@ -15,7 +16,7 @@ RGB_MATRIX_EFFECT(bnk9_per_key_effect)
 // #        include "via.h"
 #        include "bnk9.h"
 
-/*
+/**
  * Per-key color effect
  */
 static bool bnk9_per_key_effect(effect_params_t* params) {
@@ -34,6 +35,24 @@ static bool bnk9_per_key_effect(effect_params_t* params) {
             rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
         }
     }
+
+    return rgb_matrix_check_finished_leds(led_max);
+}
+
+/**
+ * Per-layer effect
+ */
+static bool bnk8_per_layer_effect(effect_params_t* params) {
+    RGB_MATRIX_USE_LIMITS(led_min, led_max);
+    HSV hsv;
+    RGB rgb;
+
+    uint8_t i = get_highest_layer(layer_state) % DYNAMIC_KEYMAP_LAYER_COUNT; // !! Must match how many colors stored in g_user_config
+    hsv.h     = g_user_config.lyrclr[i].h;
+    hsv.s     = g_user_config.lyrclr[i].s;
+    hsv.v     = rgb_matrix_get_val();
+    rgb       = hsv_to_rgb(hsv);
+    rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
 
     return rgb_matrix_check_finished_leds(led_max);
 }

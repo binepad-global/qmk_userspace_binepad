@@ -5,7 +5,8 @@
     "matrix": {"rows": 4, "cols": 3},
     "keycodes": ["qmk_lighting"],
     "customKeycodes": [
-        {"name": "Caffeine", "title": "Host machine keep awake", "shortName": "KC_COFFEE"}
+        {"name": "Caffeine", "title": "Host machine keep awake", "shortName": "Caff"},
+        {"name": "Layer", "title": "Step through the layers", "shortName": "Layer"}
     ],
     "menus": [
         {
@@ -35,7 +36,8 @@
                                 ["13. Starlight Dual Hue", 13],
                                 ["14. Starlight Dual Saturation", 14],
                                 ["15. Riverflow", 15],
-                                ["16. Per-key Static RGB", 16]
+                                ["16. Per-key Static RGB", 16],
+                                ["17. Per-layer static RGB", 17]
                             ]
                         },
                         {
@@ -112,6 +114,61 @@
                             "label": "9. Bottom Right Key",
                             "type": "color",
                             "content": ["id_custom_color[8]", 0, 1, 8]
+                        },
+
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "0. Layer 0 (default)",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[0]", 0, 2, 0]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "1. Layer 1",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[1]", 0, 2, 1]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "2. Layer 2",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[2]", 0, 2, 2]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "3. Layer 3",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[3]", 0, 2, 3]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "4. Layer 4",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[4]", 0, 2, 4]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "5. Layer 5",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[5]", 0, 2, 5]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "6. Layer 6",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[6]", 0, 2, 6]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "7. Layer 7",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[7]", 0, 2, 7]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "8. Layer 8",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[8]", 0, 2, 8]
                         }
                     ]
                 }

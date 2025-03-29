@@ -3,7 +3,8 @@
 
 #include "quantum.h"
 
-#if defined(RGB_MATRIX_CUSTOM_KB) && defined(VIA_ENABLE) // Only works if VIA is enabled
+// Only works if VIA is enabled
+#if defined(RGB_MATRIX_CUSTOM_KB) && defined(VIA_ENABLE)
 
 #    include "color.h"
 #    include "progmem.h"
@@ -23,18 +24,35 @@
 #    endif
 
 // clang-format off
+
+#define _H__(h)  ((uint8_t)((h) * 255 / 360))  // Convert hue (0-360) to (0-255)
+#define _S__(s)  ((uint8_t)((s) * 255 / 100))  // Convert saturation (0-100) to (0-255))
+
 user_config_t g_user_config = {
-    .color = {
-        RGB_PER_KEY_DEFAULT_COLOR,
-        {.h = 30, .s = 255},
-        {.h = 60, .s = 255},
-        {.h = 90, .s = 255},
-        {.h = 120, .s = 255},
-        {.h = 150, .s = 255},
-        {.h = 180, .s = 255},
-        {.h = 210, .s = 255},
-        {.h = 240, .s = 255}
-    } };
+    .color = {                            // rainbow, ... sort-of
+        RGB_PER_KEY_DEFAULT_COLOR,        // #ff0000
+        {.h = _H__(40), .s = _S__(100)},  // #ffaa00
+        {.h = _H__(80), .s = _S__(100)},  // #ffff00
+        {.h = _H__(120), .s = _S__(100)}, // #aaff00
+        {.h = _H__(160), .s = _S__(100)}, // #00ff00
+        {.h = _H__(200), .s = _S__(100)}, // #00ffa9
+        {.h = _H__(240), .s = _S__(100)}, // #00aaff
+        {.h = _H__(280), .s = _S__(100)}, // #5500ff
+        {.h = _H__(320), .s = _S__(100)}  // #ff00aa
+    },
+    .lyrclr = {
+        RGB_PER_KEY_DEFAULT_COLOR,        // #ff0000
+        {.h = _H__(40), .s = _S__(100)},  // #ffaa00
+        {.h = _H__(80), .s = _S__(100)},  // #ffff00
+        {.h = _H__(120), .s = _S__(100)}, // #aaff00
+        {.h = _H__(160), .s = _S__(100)}, // #00ff00
+        {.h = _H__(200), .s = _S__(100)}, // #00ffa9
+        {.h = _H__(240), .s = _S__(100)}, // #00aaff
+        {.h = _H__(280), .s = _S__(100)}, // #5500ff
+        {.h = _H__(320), .s = _S__(100)}  // #ff00aa
+    }
+};
+
 // clang-format on
 
 // *** Helpers ***
@@ -50,6 +68,12 @@ void bnk9_config_set_value(uint8_t *data) {
             g_user_config.color[i].s = value_data[2];
             break;
         }
+        case id_custom_lyrclr: {
+            uint8_t i                 = value_data[0];
+            g_user_config.lyrclr[i].h = value_data[1];
+            g_user_config.lyrclr[i].s = value_data[2];
+            break;
+        }
     }
 }
 
@@ -62,6 +86,12 @@ void bnk9_config_get_value(uint8_t *data) {
             uint8_t i     = value_data[0];
             value_data[1] = g_user_config.color[i].h;
             value_data[2] = g_user_config.color[i].s;
+            break;
+        }
+        case id_custom_lyrclr: {
+            uint8_t i     = value_data[0];
+            value_data[1] = g_user_config.lyrclr[i].h;
+            value_data[2] = g_user_config.lyrclr[i].s;
             break;
         }
     }
@@ -122,7 +152,8 @@ void bnk9_dummy_get_value(uint8_t *data) {
     uint8_t *value_data = &(data[1]);
 
     switch (*value_id) {
-        case id_custom_color: {
+        case id_custom_color:
+        case id_custom_lyrclr: {
             value_data[1] = 0;
             value_data[2] = 0;
             break;
