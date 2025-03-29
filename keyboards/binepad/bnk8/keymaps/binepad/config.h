@@ -3,7 +3,7 @@
 
 #pragma once
 
-#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 16 // needed for custom save to work
+#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 32 // needed for custom save to work
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
 

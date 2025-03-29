@@ -10,23 +10,27 @@
 
 // clang-format off
 enum bnk8_keyboard {
-    #ifdef CAFFEINE_ENABLE
+    #ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
     KC_CAFFEINE_TOGGLE = QK_KB_0,
-    #endif // CAFFEINE_ENABLE
-    KC_LAYER_SELECTOR = QK_KB_1
+    #endif // COMMUNITY_MODULE_CAFFEINE_ENABLE
+    KC_LAYER_SELECTOR = QK_KB_1,
+    #ifdef COMMUNITY_MODULE_VERSION_ENABLE
+    KC_PRINT_VERSION = QK_KB_9,
+    #endif // COMMUNITY_MODULE_VERSION_ENABLE
 };
 // clang-format on
 
-#define KC_LAYER KC_LAYER_SELECTOR
-#ifdef CAFFEINE_ENABLE
-#    define KC_COFFEE KC_CAFFEINE_TOGGLE
-#endif // CAFFEINE_ENABLE
+#define KC_LAYR KC_LAYER_SELECTOR
+#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
+#    define KC_COFY KC_CAFFEINE_TOGGLE
+#endif // COMMUNITY_MODULE_CAFFEINE_ENABLE
 
 #ifdef VIA_ENABLE // Only works if VIA is enabled
 
 // clang-format off
 enum via_per_key_value {
-    id_custom_color = 1
+    id_custom_color  = 1,
+    id_custom_lyrclr = 2
 };
 // clang-format on
 
@@ -36,9 +40,10 @@ typedef struct PACKED {
 } HS;
 
 typedef union {
-    uint8_t raw[16];
+    uint8_t raw[32];
     struct {
         HS color[8];
+        HS lyrclr[8];
     };
 } user_config_t;
 

@@ -3,23 +3,19 @@
 
 #include QMK_KEYBOARD_H
 
-#include "binepad_common.h"
 #include "bnk8.h"
 
 #ifdef VIAL_PROTOCOL_VERSION
 #    error "This keymap is not intended for VIAL. Please use QMK."
 #endif
 
-#ifdef CAFFEINE_ENABLE
-#    include "caffeine.h"
-#endif // CAFFEINE_ENABLE
-
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
 // #    error CONSOLE_ENABLE is ON!
 #endif
 
-#ifdef CAFFEINE_ENABLE
+#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
+#    include "caffeine.h"
 #    define COFFEE KC_CAFFEINE_TOGGLE
 #endif
 
@@ -64,77 +60,59 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 
 // ---------- Optional Add-ons -----------
 
-#if defined(CAFFEINE_ENABLE) // && && &&  ... All the optionals
-
-#    ifdef RGB_MATRIX_ENABLE
+#if defined(RGB_MATRIX_ENABLE) && defined(COMMUNITY_MODULE_CAFFEINE_ENABLE)
 
 bool rgb_matrix_indicators_user(void) {
-#        ifdef CAFFEINE_ENABLE
     if (!rgb_matrix_indicators_caffeine()) return false;
-#        endif
     return true;
 }
 
-#    endif // RGB_MATRIX_ENABLE
-
-// void keyboard_post_init_user(void) {
-
-//     // #ifdef CONSOLE_ENABLE
-//     // // Customise these values to desired behaviour
-//     // debug_enable = true;
-//     // // debug_matrix = true;
-//     // // debug_keyboard=true;
-//     // // debug_mouse=true;
-//     // #endif
-// }
-
-// void eeconfig_init_user(void) {
-// }
-
 void matrix_scan_user(void) {
-#    ifdef CAFFEINE_ENABLE
     matrix_scan_caffeine();
-#    endif
 }
 
-void housekeeping_task_user(void) {
-#    ifdef CAFFEINE_ENABLE
-    housekeeping_task_caffeine();
-#    endif
-}
+// !! : Not needed when used as a module
+// void housekeeping_task_user(void) {
+//     housekeeping_task_caffeine();
+// }
 
 #endif // All the optionals
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // #ifdef CONSOLE_ENABLE
-    // dprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-    // #endif
+/* !! : Only needed when debugging
+void keyboard_post_init_user(void) {
+#ifdef CONSOLE_ENABLE
+    // Customise these values to desired behaviour
+    debug_enable = true;
+    // debug_matrix = true;
+    // debug_keyboard=true;
+    // debug_mouse=true;
+#endif
+}
+*/
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
+        // !! : no, it's not duplication, this is for VIA keymaps
+        case KC_CAFFEINE_TOGGLE:
+            return process_keycode_caffeine_toggle(record);
+            break;
+#endif // COMMUNITY_MODULE_CAFFEINE_ENABLE
+
         case KC_LAYER_SELECTOR:
             if (record->event.pressed) {
-                uint8_t current_layer = get_highest_layer(layer_state);
-                uint8_t next_layer    = current_layer + 1;
-                if (next_layer >= DYNAMIC_KEYMAP_LAYER_COUNT) {
-                    next_layer = 0;
-                }
+                uint8_t next_layer = (get_highest_layer(layer_state) + 1) % DYNAMIC_KEYMAP_LAYER_COUNT;
                 layer_move(next_layer);
             }
             return false;
-
-#    ifdef CAFFEINE_ENABLE
-        case KC_CAFFEINE_TOGGLE:
-            return caffeine_process_toggle_keycode(record);
             break;
-#    endif
 
-        default:
+#ifdef COMMUNITY_MODULE_VERSION_ENABLE
+        case KC_PRINT_VERSION:
+            return process_record_version(COMMUNITY_MODULE_SEND_VERSION, record);
             break;
+#endif // COMMUNITY_MODULE_VERSION_ENABLE
     }
 
-    // call into binepad_common.c
-    if (!process_record_binepad(keycode, record)) {
-        return false;
-    }
     return true;
 }
