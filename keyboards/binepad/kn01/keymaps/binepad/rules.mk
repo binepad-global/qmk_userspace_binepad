@@ -7,6 +7,7 @@ VIAL_ENABLE = yes
 QMK_SETTINGS = no  # don't need these
 
 ENCODER_MAP_ENABLE = yes
+MIDI_ENABLE = yes
 
 VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
 SRC += binepad_common.c

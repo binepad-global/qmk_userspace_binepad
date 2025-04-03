@@ -1,4 +1,7 @@
 {
+    "vial": {
+        "midi": "advanced"
+    },
     "lighting": "none",
     "matrix": { "rows": 1, "cols": 1 },
     "layouts": {

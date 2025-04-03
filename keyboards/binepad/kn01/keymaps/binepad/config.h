@@ -10,6 +10,8 @@
 #endif
 #define DYNAMIC_KEYMAP_LAYER_COUNT 2
 
+#define MIDI_ADVANCED
+
 #define VIAL_KEYBOARD_UID {0xF2, 0x59, 0x70, 0xE1, 0x86, 0x78, 0x9F, 0x58}
 
 #define VIAL_UNLOCK_COMBO_ROWS { 0 }
