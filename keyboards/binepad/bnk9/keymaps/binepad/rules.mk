@@ -12,7 +12,11 @@ MIDI_ENABLE = yes
 RGB_MATRIX_CUSTOM_KB = yes
 CAFFEINE_ENABLE = yes
 
+OS_DETECTION_ENABLE = yes
+ENCODER_DRIVER ?= custom  # use custom encoder
+
 VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
+SRC += encoder_configurable.c  # our custom encoder
 SRC += binepad_common.c
 SRC += bnk9_effect.c
 

@@ -9,17 +9,12 @@
 
 /* The below overrides the QMK repo keyboard.json sets */
 
-#ifdef ENCODER_RESOLUTION
-#    undef ENCODER_RESOLUTION // res at 2 does not work so well on macOS, each click moves by 2
-#    define ENCODER_RESOLUTION 4
+#ifdef OS_DETECTION_ENABLE
+    // res at 2 does not work so well on macOS, each click moves by 2
+#    define ENCODER_RESOLUTION_MACOS 4
 #endif
 
 #ifdef RGB_MATRIX_LED_PROCESS_LIMIT
 #    undef RGB_MATRIX_LED_PROCESS_LIMIT
 #    define RGB_MATRIX_LED_PROCESS_LIMIT 8
-#endif
-
-#ifdef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#    undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255 // with only 8 LEDs we can go full brightness
 #endif
