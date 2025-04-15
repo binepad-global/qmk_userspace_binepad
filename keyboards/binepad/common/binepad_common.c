@@ -1,4 +1,4 @@
-// Copyright 2023 Silvino Rodrigues (@silvinor)
+// Copyright 2023 Silvino R. (@silvinor)
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "quantum.h"

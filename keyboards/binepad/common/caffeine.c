@@ -1,4 +1,4 @@
-// Copyright 2023 Vino Rodrigues (@silvinor)
+// Copyright 2023 Vino R. (@silvinor)
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include <quantum.h>
