@@ -23,18 +23,23 @@
 #    endif
 
 // clang-format off
+
+#define _H__(h)  ((uint8_t)((h) * 255 / 360))  // Convert hue (0-360) to (0-255)
+#define _S__(s)  ((uint8_t)((s) * 255 / 100))  // Convert saturation (0-100) to (0-255))
+
 user_config_t g_user_config = {
     .color = {
-        RGB_PER_KEY_DEFAULT_COLOR,
-        {.h = 30, .s = 255},
-        {.h = 60, .s = 255},
-        {.h = 90, .s = 255},
-        {.h = 120, .s = 255},
-        {.h = 150, .s = 255},
-        {.h = 180, .s = 255},
-        {.h = 210, .s = 255},
-        {.h = 240, .s = 255}
+        RGB_PER_KEY_DEFAULT_COLOR,        // #ff0000
+        {.h = _H__(40), .s = _S__(100)},  // #ffaa00
+        {.h = _H__(80), .s = _S__(100)},  // #ffff00
+        {.h = _H__(120), .s = _S__(100)}, // #aaff00
+        {.h = _H__(160), .s = _S__(100)}, // #00ff00
+        {.h = _H__(200), .s = _S__(100)}, // #00ffa9
+        {.h = _H__(240), .s = _S__(100)}, // #00aaff
+        {.h = _H__(280), .s = _S__(100)}, // #5500ff
+        {.h = _H__(320), .s = _S__(100)}  // #ff00aa
     } };
+
 // clang-format on
 
 // *** Helpers ***
@@ -68,11 +73,11 @@ void bnk9_config_get_value(uint8_t *data) {
 }
 
 void bnk9_config_load(void) {
-    eeprom_read_block( &g_user_config, ((void*)BNK9_CONFIG_EEPROM_ADDR), sizeof(user_config_t));
+    eeprom_read_block(&g_user_config, ((void *)BNK9_CONFIG_EEPROM_ADDR), sizeof(user_config_t));
 }
 
 void bnk9_config_save(void) {
-    eeprom_update_block( &g_user_config, ((void*)BNK9_CONFIG_EEPROM_ADDR), sizeof(user_config_t));
+    eeprom_update_block(&g_user_config, ((void *)BNK9_CONFIG_EEPROM_ADDR), sizeof(user_config_t));
 }
 
 void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
@@ -156,4 +161,4 @@ void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
 }
 
 #    endif // VIA_ENABLE
-#endif // RGB_MATRIX_CUSTOM_KB
+#endif     // RGB_MATRIX_CUSTOM_KB
