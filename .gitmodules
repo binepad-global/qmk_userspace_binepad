@@ -4,6 +4,3 @@
 [submodule "modules/silvinor"]
 	path = modules/silvinor
 	url = https://github.com/silvinor/qmk_modules.git
-[submodule "modules/tzarc"]
-	path = modules/tzarc
-	url = https://github.com/tzarc/qmk_modules.git
