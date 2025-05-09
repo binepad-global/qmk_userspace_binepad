@@ -8,31 +8,26 @@
 #    include "color.h"
 #endif
 
-// clang-format off
-enum bnk8_keyboard {
-    KC_CAFFEINE_TOGGLE = QK_KB_0,
-    KC_APPLE_GLOBE = QK_KB_1,
-    KC_PRINT_VERSION = QK_KB_9
-};
-// clang-format on
-
 #ifdef VIA_ENABLE // Only works if VIA is enabled
 
 // clang-format off
 enum via_per_key_value {
-    id_custom_color = 1
+    id_custom_color  = 1,
+    id_custom_lyrclr = 2
+
 };
 // clang-format on
 
 typedef struct PACKED {
     uint8_t h;
     uint8_t s;
-} HS;
+} hs_t;
 
 typedef union {
     uint8_t raw[16];
     struct {
-        HS color[8];
+        hs_t color[8];
+        hs_t lyrclr[8];
     };
 } user_config_t;
 

@@ -11,9 +11,6 @@ RGB_MATRIX_EFFECT(bnk8_per_layer_effect)
 
 #if defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE)
 
-// #    include "eeprom.h"
-// #    include "eeconfig.h"
-// #    include "via.h"
 #    include "bnk8.h"
 
 /**

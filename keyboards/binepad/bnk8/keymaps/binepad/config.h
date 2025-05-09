@@ -3,9 +3,14 @@
 
 #pragma once
 
-#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 16 // needed for custom save to work
+#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 32 // needed for custom save to work
+#define VIA_FIRMWARE_VERSION 2 // needed to load next version of via json
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
+
+/* Community modules */
+
+#define DOUBLE_TAP_KEY_COUNT 0
 
 /* The below overrides the QMK repo keyboard.json sets */
 

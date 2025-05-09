@@ -1,7 +1,0 @@
-{
-    "modules": [
-        "binepad/common",
-        "silvinor/version",
-        "silvinor/caffeine"
-    ]
-}
