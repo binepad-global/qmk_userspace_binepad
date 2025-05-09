@@ -1,0 +1,24 @@
+{
+    "keyboard": "binepad/bnr1",
+    "keymap": "silvinor",
+    "layout": "LAYOUT_ortho_1x1",
+    "config": {
+        "features": {
+            "midi": true,
+            "nkro": false,
+            "via": true,
+            "encoder_map": true
+        }
+    },
+    "layers": [
+        ["LT(1,KC_SPC)"],
+        ["_______"]
+    ],
+    "encoders": [
+        [{ "ccw": "KC_DOWN", "cw": "KC_UP" }],
+        [{ "ccw": "KC_RGHT", "cw": "KC_LEFT" }]
+    ],
+    "modules": [
+        "silvinor/sr_version"
+    ]
+}
