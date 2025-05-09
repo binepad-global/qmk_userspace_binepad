@@ -8,7 +8,7 @@
 #    include "print.h"
 #endif
 
-#ifdef VIAL_PROTOCOL_VERSION
+#if defined(VIAL_PROTOCOL_VERSION) || defined(BUILD_ID)
 #    error "This keymap is not intended for VIAL. Please use QMK."
 #endif
 
@@ -98,9 +98,9 @@ bool set_leds_off(keyrecord_t *record) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifdef CONSOLE_ENABLE
-    uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-#endif
+// #ifdef CONSOLE_ENABLE
+//     uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+// #endif
 
     switch (keycode) {
         case RM_TOGG: {
