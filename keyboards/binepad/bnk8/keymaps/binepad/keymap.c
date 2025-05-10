@@ -20,15 +20,6 @@
 #    include "sr_version.h"
 #endif
 
-#ifdef CONSOLE_ENABLE
-void matrix_init_user(void) {
-    debug_enable = true; // Enables debug prints
-    // debug_matrix = true;          // Shows matrix changes
-    debug_keyboard = true; // Shows keyboard-level events
-    // debug_mouse = true;           // Shows mouse-level events
-}
-#endif
-
 // ---------- Technicaly not needed, but good to optimise ----------
 
 #ifdef MATRIX_MASKED
@@ -51,6 +42,18 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT_ortho_
 // clang-format on
 #endif
 
+// ---------- Debug ----------
+
+#ifdef CONSOLE_ENABLE
+void keyboard_post_init_user(void) {
+    /* Customise these values to desired behaviour */
+    debug_enable = true; // Enables debug prints
+    // debug_matrix = true;          // Shows matrix changes
+    // debug_keyboard = true; // Shows keyboard-level events
+    // debug_mouse = true;           // Shows mouse-level events
+}
+#endif
+
 // ---------- Optional Add-ons -----------
 
 #ifdef COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
@@ -64,7 +67,7 @@ void matrix_scan_user(void) {
     matrix_scan_sr_caffeine();
 }
 
-// !! : Not needed when used as a module
+// !! : Not needed when using the community module
 // void housekeeping_task_user(void) {
 //     housekeeping_task_sr_caffeine();
 // }
@@ -98,15 +101,15 @@ bool set_leds_off(keyrecord_t *record) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-// #ifdef CONSOLE_ENABLE
-//     uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-// #endif
+    // #ifdef CONSOLE_ENABLE
+    //     uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+    // #endif
 
     switch (keycode) {
         case RM_TOGG: {
-#    ifdef CONSOLE_ENABLE
+#ifdef CONSOLE_ENABLE
             print("RM_TOGG\n");
-#    endif
+#endif
             if (record->event.pressed) {
                 if (get_leds_is_on()) {
                     return set_leds_off(record);
@@ -118,16 +121,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
 
         case RM_ON: {
-#    ifdef CONSOLE_ENABLE
+#ifdef CONSOLE_ENABLE
             print("RM_ON\n");
-#    endif
+#endif
             return set_leds_on(record);
         }
 
         case RM_OFF: {
-#    ifdef CONSOLE_ENABLE
+#ifdef CONSOLE_ENABLE
             print("RM_OFF\n");
-#    endif
+#endif
             return set_leds_off(record);
         }
 
@@ -158,7 +161,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 
 #ifdef COMMUNITY_MODULE_SR_VERSION_ENABLE
-        case QK_KB_9: {
+        case USER_SET_KEYCODE_SEND_VERSION: {
 #    ifdef CONSOLE_ENABLE
             print("VERSION\n");
 #    endif

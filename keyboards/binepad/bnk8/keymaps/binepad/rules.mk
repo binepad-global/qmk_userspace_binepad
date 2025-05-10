@@ -3,4 +3,6 @@
 
 RGB_MATRIX_CUSTOM_KB = yes
 
-SRC += bnk8_effect.c
+OS_DETECTION_ENABLE = yes # needed for BP Encoder Configurable community module
+
+SRC += bnk8_via_config.c

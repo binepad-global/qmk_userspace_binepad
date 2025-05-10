@@ -44,12 +44,18 @@ static bool bnk8_per_layer_effect(effect_params_t* params) {
     HSV hsv;
     RGB rgb;
 
+    // Assuming `g_user_config` is set prior
+
     uint8_t i = get_highest_layer(layer_state) % 8; // 8 = how many colors stored in g_user_config
-    hsv.h     = g_user_config.color[i].h;
-    hsv.s     = g_user_config.color[i].s;
-    hsv.v     = rgb_matrix_get_val();
-    rgb       = hsv_to_rgb(hsv);
-    rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
+    if ((0 == i) && !g_user_config.lyr0on) {
+        rgb_matrix_set_color_all(0, 0, 0); // off / no color
+    } else {
+        hsv.h     = g_user_config.lyrclr[i].h;
+        hsv.s     = g_user_config.lyrclr[i].s;
+        hsv.v     = rgb_matrix_get_val();
+        rgb       = hsv_to_rgb(hsv);
+        rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
+    }
 
     return rgb_matrix_check_finished_leds(led_max);
 }

@@ -3,10 +3,12 @@
 
 #pragma once
 
-#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 32 // needed for custom save to work
-#define VIA_FIRMWARE_VERSION 2 // needed to load next version of via json
+#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 34 // needed for custom save to work
+#define VIA_FIRMWARE_VERSION 2           // needed to load next version of via json
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
+
+#define USER_SET_KEYCODE_SEND_VERSION QK_KB_9
 
 /* Community modules */
 
@@ -15,8 +17,10 @@
 /* The below overrides the QMK repo keyboard.json sets */
 
 #ifdef ENCODER_RESOLUTION
-#    undef ENCODER_RESOLUTION // res at 2 does not work so well on macOS, each click moves by 2
-#    define ENCODER_RESOLUTION 4
+#    define ENCODER_RESOLUTION_MACOS 4 // Used by BP_Encoder_Config community module
+#    if ENCODER_RESOLUTION == 4
+#        define ENCODER_DEFAULT_POS 0x3
+#    endif
 #endif
 
 #ifdef RGB_MATRIX_LED_PROCESS_LIMIT
