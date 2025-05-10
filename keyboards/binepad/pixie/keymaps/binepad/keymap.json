@@ -1,0 +1,27 @@
+{
+    "config": {
+        "features": {
+            "encoder_map": true,
+            "nkro": false,
+            "via": true
+        }
+    },
+    "encoders": [
+        [
+            { "ccw": "KC_VOLD", "cw": "KC_VOLU" },
+            { "ccw": "KC_WH_U", "cw": "KC_WH_D" }
+        ]
+    ],
+    "keyboard": "binepad/pixie",
+    "keymap": "binepad",
+    "layers": [
+        [
+            "KC_MUTE", "KC_MPLY",
+            "KC_MPRV", "KC_MNXT"
+        ]
+    ],
+    "layout": "LAYOUT",
+    "modules": [
+        "silvinor/sr_version"
+    ]
+}
