@@ -12,15 +12,15 @@
 
 /* Community modules */
 
-#define DOUBLE_TAP_KEY_COUNT 0
+#define DOUBLE_TAP_KEY_COUNT 2
 
 /* The below overrides the QMK repo keyboard.json sets */
 
-#ifdef ENCODER_RESOLUTION
+#if defined(ENCODER_RESOLUTION) && defined(OS_DETECTION_ENABLE)
 #    define ENCODER_RESOLUTION_MACOS 4 // Used by BP_Encoder_Config community module
-#    if ENCODER_RESOLUTION == 4
-#        define ENCODER_DEFAULT_POS 0x3
-#    endif
+// #    if ENCODER_RESOLUTION == 4
+// #        define ENCODER_DEFAULT_POS 0x3
+// #    endif
 #endif
 
 #ifdef RGB_MATRIX_LED_PROCESS_LIMIT

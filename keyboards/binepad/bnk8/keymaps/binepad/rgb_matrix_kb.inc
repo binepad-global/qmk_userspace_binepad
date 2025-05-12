@@ -47,7 +47,7 @@ static bool bnk8_per_layer_effect(effect_params_t* params) {
     // Assuming `g_user_config` is set prior
 
     uint8_t i = get_highest_layer(layer_state) % 8; // 8 = how many colors stored in g_user_config
-    if ((0 == i) && !g_user_config.lyr0on) {
+    if ((0 == i) && !g_user_config.l0_off) {
         rgb_matrix_set_color_all(0, 0, 0); // off / no color
     } else {
         hsv.h     = g_user_config.lyrclr[i].h;

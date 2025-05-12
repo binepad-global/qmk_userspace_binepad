@@ -39,6 +39,15 @@ void print_buff(uint8_t *data, uint8_t length) {
 }
 #    endif
 
+#    ifdef RGB_MATRIX_ENABLE
+void __set_all_leds(uint8_t red, uint8_t green, uint8_t blue) {
+    if (!rgb_matrix_is_enabled()) rgb_matrix_enable_noeeprom();
+    rgb_matrix_set_color_all(red, green, blue);
+    rgb_matrix_update_pwm_buffers();
+    wait_ms(100); // 1/10 sec
+}
+#    endif
+
 void bnk8_config_set_value(uint8_t *data) {
     uint8_t *value_id   = &(data[0]);
     uint8_t *value_data = &(data[1]);
@@ -66,12 +75,12 @@ void bnk8_config_set_value(uint8_t *data) {
             break;
         }
 
-        case id_custom_lyr0on:
+        case id_custom_l0_off:
 #    ifdef CONSOLE_ENABLE
-            print("Per Layer layer 0 ON > ");
+            print("Per Layer layer 0 set to Off > ");
             print_buff(&(data[0]), 2);
 #    endif
-            g_user_config.lyr0on = value_data[0];
+            g_user_config.l0_off = value_data[0] != 0;
             break;
 
         case id_encoder_resolution:
@@ -89,9 +98,11 @@ void bnk8_config_set_value(uint8_t *data) {
 #    endif
             switch (value_data[0]) {
                 case id_button_bootloader:
+                    __set_all_leds(RGB_RED);
                     reset_keyboard();
                     break;
                 case id_button_reboot:
+                    __set_all_leds(RGB_BLUE);
                     soft_reset_keyboard();
                     break;
                 case id_button_debug_toggle:
@@ -104,7 +115,9 @@ void bnk8_config_set_value(uint8_t *data) {
 #    endif
                     break;
                 case id_button_clear_eeprom:
+                    __set_all_leds(RGB_YELLOW);
                     eeconfig_disable();
+                    wait_ms(400); // 1/2 sec, with the 100 in __set_all_leds
                     soft_reset_keyboard();
                     break;
             }
@@ -130,8 +143,8 @@ void bnk8_config_get_value(uint8_t *data) {
             value_data[2] = g_user_config.lyrclr[i].s;
             break;
         }
-        case id_custom_lyr0on:
-            value_data[0] = g_user_config.lyr0on ? 1 : 0;
+        case id_custom_l0_off:
+            value_data[0] = g_user_config.l0_off ? 1 : 0;
             break;
         case id_encoder_resolution:
             value_data[0] = g_user_config.enc_res;
@@ -149,7 +162,7 @@ void bnk8_config_init(void) {
         g_user_config.lyrclr[i].h = _H__(i * 36);
         g_user_config.lyrclr[i].s = _S__(100);
     }
-    g_user_config.lyr0on  = true;
+    g_user_config.l0_off  = false;
     g_user_config.enc_res = 0;
 }
 

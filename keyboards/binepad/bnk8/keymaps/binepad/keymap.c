@@ -20,6 +20,10 @@
 #    include "sr_version.h"
 #endif
 
+#ifdef COMMUNITY_MODULE_BP_DOUBLE_TAP_LITE_ENABLE
+#    include "bp_double_tap_lite.h"
+#endif
+
 // ---------- Technicaly not needed, but good to optimise ----------
 
 #ifdef MATRIX_MASKED
@@ -54,7 +58,35 @@ void keyboard_post_init_user(void) {
 }
 #endif
 
+// ---------- Layer Buttons -----------
+
+#ifdef DYNAMIC_KEYMAP_LAYER_COUNT
+#    define BNK8_KEYMAP_LAYER_COUNT DYNAMIC_KEYMAP_LAYER_COUNT
+#else
+#    define BNK8_KEYMAP_LAYER_COUNT 4
+#endif
+
+bool process_bnk8_layer_up(keyrecord_t *record) {
+    if (record->event.pressed) {
+        uint8_t current_layer = get_highest_layer(layer_state);
+        uint8_t next_layer    = (current_layer + 1) % BNK8_KEYMAP_LAYER_COUNT;
+        layer_move(next_layer);
+    }
+    return false;
+}
+
+bool process_bnk8_layer_down(keyrecord_t *record) {
+    if (record->event.pressed) {
+        uint8_t current_layer = get_highest_layer(layer_state);
+        uint8_t prev_layer    = (current_layer == 0) ? (BNK8_KEYMAP_LAYER_COUNT - 1) : (current_layer - 1);
+        layer_move(prev_layer);
+    }
+    return false;
+}
+
 // ---------- Optional Add-ons -----------
+
+// .......... Caffeine ..........
 
 #ifdef COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
 
@@ -67,18 +99,28 @@ void matrix_scan_user(void) {
     matrix_scan_sr_caffeine();
 }
 
-// !! : Not needed when using the community module
-// void housekeeping_task_user(void) {
-//     housekeeping_task_sr_caffeine();
-// }
-
 #else
 #    error "This build requires COMMUNITY_MODULE_SR_CAFFEINE_ENABLE"
 #endif // COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
 
+// .......... Version ..........
+
 #ifndef COMMUNITY_MODULE_SR_VERSION_ENABLE
 #    error "This build requires COMMUNITY_MODULE_SR_VERSION_ENABLE"
 #endif // COMMUNITY_MODULE_SR_VERSION_ENABLE
+
+// .......... Double Tap ..........
+
+#ifdef COMMUNITY_MODULE_BP_DOUBLE_TAP_LITE_ENABLE
+// clang-format off
+dt_keycodes_t double_tap_keycodes[] = {
+    {.kcc = QK_KB_1, .mode = DT_MODE_KEYCODE, .kc1 = KC_MUTE, .kc2 = KC_MPLY},
+    {.kcc = QK_KB_2, .mode = DT_MODE_FUNCTION, .fn1 = process_bnk8_layer_up, .fn2 = process_bnk8_layer_down}
+};
+// clang-format on
+#endif
+
+// ---------- RGB Matrix ----------
 
 bool get_leds_is_on(void) {
     return rgb_matrix_get_flags() != LED_FLAG_NONE;
@@ -99,6 +141,8 @@ bool set_leds_off(keyrecord_t *record) {
     }
     return false;
 }
+
+// ========== Process Record ==========
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // #ifdef CONSOLE_ENABLE
@@ -143,14 +187,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_keycode_sr_caffeine_toggle(record);
         }
 
-        case QK_KB_1: {
+            // QK_KB_1 & QK_KB_2 are handled by `process_record_bp_double_tap_lite`
+
+        case QK_KB_3: {
+            return process_bnk8_layer_up(record);
+        }
+
+        case QK_KB_4: {
+            return process_bnk8_layer_down(record);
+        }
+
+        case QK_KB_5: {
+            if (record->event.pressed) {
+                uint8_t current_layer = get_highest_layer(layer_state);
+                char    layer_str[4];
+                snprintf(layer_str, sizeof(layer_str), "%d", current_layer);
+                SEND_STRING(layer_str);
+            }
+            return false;
+        }
+
+        case QK_KB_7: {
 #    ifdef CONSOLE_ENABLE
             print("caffeine_on\n");
 #    endif
             return process_keycode_sr_caffeine_on(record);
         }
 
-        case QK_KB_2: {
+        case QK_KB_8: {
 #    ifdef CONSOLE_ENABLE
             print("caffeine_off\n");
 #    endif

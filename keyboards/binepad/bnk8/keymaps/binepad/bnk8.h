@@ -10,16 +10,16 @@
 
 #ifdef VIA_ENABLE // Only works if VIA is enabled
 
-#if !defined(VIA_EEPROM_CUSTOM_CONFIG_SIZE) || VIA_EEPROM_CUSTOM_CONFIG_SIZE != 34
-#    error "Please set VIA_EEPROM_CUSTOM_CONFIG_SIZE to 34 in config.h"
-#endif
+#    if !defined(VIA_EEPROM_CUSTOM_CONFIG_SIZE) || VIA_EEPROM_CUSTOM_CONFIG_SIZE != 34
+#        error "Please set VIA_EEPROM_CUSTOM_CONFIG_SIZE to 34 in config.h"
+#    endif
 
 // clang-format off
 
 enum via_per_key_value {
     id_custom_color = 1,
     id_custom_lyrclr,      // 2
-    id_custom_lyr0on,      // 3
+    id_custom_l0_off,      // 3
     id_encoder_resolution, // 4
     id_firmware_button     // 5
 };
@@ -48,7 +48,7 @@ typedef union {
     union {
         uint8_t flags;
         struct {
-            bool lyr0on : 1;
+            bool l0_off : 1;
         };
     };
     uint8_t enc_res;

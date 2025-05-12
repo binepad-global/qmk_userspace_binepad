@@ -27,6 +27,7 @@
     "layout": "LAYOUT_ortho_3x3",
     "modules": [
         "binepad/bp_encoder_configurable",
+        "binepad/bp_double_tap_lite",
         "silvinor/sr_common",
         "silvinor/sr_version",
         "silvinor/sr_caffeine"
