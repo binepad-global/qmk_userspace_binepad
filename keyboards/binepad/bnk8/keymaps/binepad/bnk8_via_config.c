@@ -10,10 +10,11 @@
 // Only works if VIA is enabled
 #if defined(RGB_MATRIX_CUSTOM_KB) && defined(VIA_ENABLE)
 
+#    include "via.h"
 #    include "color.h"
 #    include "progmem.h"
 #    include "eeprom.h"
-#    include "bnk8.h"
+#    include "bnk8_user.h"
 
 #    define BNK8_CONFIG_EEPROM_ADDR (VIA_EEPROM_CUSTOM_CONFIG_ADDR)
 

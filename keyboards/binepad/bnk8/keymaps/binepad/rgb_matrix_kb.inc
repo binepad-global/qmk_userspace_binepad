@@ -11,7 +11,7 @@ RGB_MATRIX_EFFECT(bnk8_per_layer_effect)
 
 #if defined(RGB_MATRIX_CUSTOM_EFFECT_IMPLS) && defined(VIA_ENABLE)
 
-#    include "bnk8.h"
+#    include "bnk8_user.h"
 
 /**
  * Per-key color effect

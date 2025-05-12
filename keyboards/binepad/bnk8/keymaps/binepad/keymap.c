@@ -3,7 +3,7 @@
 
 #include QMK_KEYBOARD_H
 
-#include "bnk8.h"
+#include "bnk8_user.h"
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
 #endif
@@ -180,24 +180,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
         // !! : no, it's not duplication, this is for VIA keymaps
-        case QK_KB_0: {
+        case B8_CAFFEINE_TOGGLE: {
 #    ifdef CONSOLE_ENABLE
             print("caffeine_toggle\n");
 #    endif
             return process_keycode_sr_caffeine_toggle(record);
         }
 
-            // QK_KB_1 & QK_KB_2 are handled by `process_record_bp_double_tap_lite`
+            // `B8_MUTE_PLAY_DOUBLE` & `B8_LAYER_JUMP` are handled by `process_record_bp_double_tap_lite`
 
-        case QK_KB_3: {
+        case B8_LAYER_UP: {
             return process_bnk8_layer_up(record);
         }
 
-        case QK_KB_4: {
+        case B8_LAYER_DOWN: {
+            // Layer down
             return process_bnk8_layer_down(record);
         }
 
-        case QK_KB_5: {
+        case B8_LAYER_PRINT: {
             if (record->event.pressed) {
                 uint8_t current_layer = get_highest_layer(layer_state);
                 char    layer_str[4];
@@ -207,14 +208,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
 
-        case QK_KB_7: {
+        case B8_CAFFEINE_ON: {
 #    ifdef CONSOLE_ENABLE
             print("caffeine_on\n");
 #    endif
             return process_keycode_sr_caffeine_on(record);
         }
 
-        case QK_KB_8: {
+        case B8_CAFFEINE_OFF: {
 #    ifdef CONSOLE_ENABLE
             print("caffeine_off\n");
 #    endif

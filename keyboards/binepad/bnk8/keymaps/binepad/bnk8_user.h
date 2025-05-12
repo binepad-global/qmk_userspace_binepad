@@ -32,6 +32,20 @@ enum via_id_firmware_button {
     id_button_clear_eeprom  // 4
 };
 
+enum custom_keycodes {
+    B8_CAFFEINE_TOGGLE = QK_KB_0,
+    B8_MUTE_PLAY_DOUBLE,    // 1
+    B8_LAYER_JUMP,          // 2
+    B8_LAYER_UP,            // 3
+    B8_LAYER_DOWN,          // 4
+    B8_LAYER_PRINT,         // 5
+    B8_CAFFEINE_ON,         // 6
+    B8_CAFFEINE_OFF,        // 7
+    B8__SPARE__8,           // 8
+    // USER_SET_KEYCODE_SEND_VERSION
+};
+
+
 // clang-format on
 
 typedef struct PACKED {
