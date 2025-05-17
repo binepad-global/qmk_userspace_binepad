@@ -4,5 +4,6 @@
 VIA_ENABLE = yes
 VIAL_ENABLE = yes
 
-VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
-SRC += binepad_common.c
+ifneq ($(findstring r1,$(KEYBOARD)),)
+    LTO_ENABLE = yes
+endif
