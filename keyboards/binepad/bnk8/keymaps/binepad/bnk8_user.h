@@ -21,7 +21,7 @@ enum via_per_key_value {
     id_custom_lyrclr,      // 2
     id_custom_l0_off,      // 3
     id_encoder_resolution, // 4
-    id_firmware_button     // 5
+    id_firmware_button = 99
 };
 
 enum via_id_firmware_button {
