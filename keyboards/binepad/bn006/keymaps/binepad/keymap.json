@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "keyboard": "binepad/bn006",
+    "keymap": "binepad",
+    "layout": "LAYOUT_ortho_2x3",
+    "layers": [
+        [
+            "KC_MPLY", "KC_MUTE", "KC_VOLU",
+            "KC_MPRV", "KC_MNXT", "KC_VOLD"
+        ]
+    ],
+    "modules": [
+        "silvinor/sr_version"
+    ]
+}
