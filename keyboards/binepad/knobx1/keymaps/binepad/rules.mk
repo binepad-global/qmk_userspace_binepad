@@ -3,4 +3,8 @@
 
 OS_DETECTION_ENABLE = yes # needed for BP Encoder Configurable community module
 
-SRC += knobx1_via_config.c
+# VIA_ENABLE = yes         # set in json
+# ENCODER_MAP_ENABLE = yes # set in json
+OS_DETECTION_ENABLE = yes
+MIDI_ENABLE = yes
+VIAL_ENABLE = yes
