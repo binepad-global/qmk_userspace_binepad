@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "keyboard": "binepad/bn003",
+    "keymap": "binepad",
+    "layout": "LAYOUT",
+    "layers": [
+        [ "KC_0", "KC_1", "KC_2" ]
+    ],
+    "modules": [
+        "silvinor/sr_version"
+    ]
+}
