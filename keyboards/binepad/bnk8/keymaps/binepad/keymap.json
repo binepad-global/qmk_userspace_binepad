@@ -1,0 +1,35 @@
+{
+    "config": {
+        "features": {
+            "encoder_map": true,
+            "nkro": false,
+            "via": true
+        }
+    },
+    "encoders": [
+        [{ "ccw": "KC_VOLD", "cw": "KC_VOLU" }],
+        [{ "ccw": "RGB_VAD", "cw": "RGB_VAI" }]
+    ],
+    "keyboard": "binepad/bnk8",
+    "keymap": "binepad",
+    "layers": [
+        [
+            "KC_P1",   "KC_P2",   "KC_MUTE",
+            "KC_P3",   "KC_P4",   "KC_P5",
+            "KC_P6",   "KC_P7",   "LT(1,KC_P8)"
+        ],
+        [
+            "RGB_HUI", "RGB_SAI", "RGB_SPI",
+            "RGB_HUD", "RGB_SAD", "RGB_SPD",
+            "RGB_TOG", "RGB_MOD", "_______"
+        ]
+    ],
+    "layout": "LAYOUT_ortho_3x3",
+    "modules": [
+        "binepad/bp_encoder_configurable",
+        "binepad/bp_double_tap_lite",
+        "silvinor/sr_common",
+        "silvinor/sr_version",
+        "silvinor/sr_caffeine"
+    ]
+}
