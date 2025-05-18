@@ -1,0 +1,216 @@
+{
+    "name": "Binepad BNK8",
+    "firmwareVersion": 2,
+    "vendorId": "0x4249",
+    "productId": "0x4E41",
+    "matrix": { "rows": 3, "cols": 3 },
+    "customKeycodes": [
+        { "name": "Coffey",      "shortName": "COFY", "title": "Caffeine Toggle" },
+        { "name": "Mute / Play", "shortName": "MTPL", "title": "Mute on tap, Play on double-tap" },
+        { "name": "Layer Jump",  "shortName": "LYRJ", "title": "Layer Jump; Up on tap, Down on double-tap" },
+        { "name": "Layer Up",    "shortName": "LYRU", "title": "Layer Up" },
+        { "name": "Layer Down",  "shortName": "LYRD", "title": "Layer Down" }
+    ],
+    "keycodes": ["qmk_lighting"],
+    "menus": [
+        {
+            "label": "Hardware",
+            "content": [
+                {
+                    "label": "Knobs",
+                    "content": [
+                        {
+                            "label": "Resolution (0 = use default)",
+                            "type": "range",
+                            "options": [0, 3],
+                            "content": ["id_encoder_resolution", 0, 4]
+                        }
+                    ]
+                },
+                {
+                    "label": "Firmware",
+                    "content": [
+                        {
+                            "label": "!! Reset EEPROM (restore factory defaults)",
+                            "type": "button",
+                            "options": [4],
+                            "content": ["id_firmware_button", 0, 99]
+                        },
+                        {
+                            "label": "!! Bootloader mode (for firmware loading)",
+                            "type": "button",
+                            "options": [1],
+                            "content": ["id_firmware_button", 0, 99]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Lighting",
+            "content": [
+                {
+                    "label": "Backlight",
+                    "content": [
+                        {
+                            "label": "Effect",
+                            "type": "dropdown",
+                            "content": ["id_qmk_rgb_matrix_effect", 3, 2],
+                            "options": [
+                                ["00. None", 0],
+                                ["01. Solid Color", 1],
+                                ["02. Breathing", 2],
+                                ["03. Cycle_all", 3],
+                                ["04. Cycle Left Right", 4],
+                                ["05 .Cycle Up Down", 5],
+                                ["06. Cycle Pinwheel", 6],
+                                ["07. Jellybean Raindrops", 7],
+                                ["08. Solid Reactive Simple", 8],
+                                ["09. Solid Reactive", 9],
+                                ["10. Splash", 10],
+                                ["11. Solid Splash", 11],
+                                ["12. Starlight", 12],
+                                ["13. Starlight Dual Hue", 13],
+                                ["14. Starlight Dual Saturation", 14],
+                                ["15. Riverflow", 15],
+                                ["16. Per-key static RGB", 16],
+                                ["17. Per-layer static RGB", 17]
+                            ]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} > 0 && {id_qmk_rgb_matrix_effect} < 16",
+                            "label": "Color",
+                            "type": "color",
+                            "content": ["id_qmk_rgb_matrix_color", 3, 4]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} > 0",
+                            "label": "Brightness",
+                            "type": "range",
+                            "options": [0, 180],
+                            "content": ["id_qmk_rgb_matrix_brightness", 3, 1]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} > 1 && {id_qmk_rgb_matrix_effect} < 16",
+                            "label": "Effect Speed",
+                            "type": "range",
+                            "options": [0, 255],
+                            "content": ["id_qmk_rgb_matrix_effect_speed", 3, 3]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "1. Top Left Key",
+                            "type": "color",
+                            "content": ["id_custom_color[0]", 0, 1, 0]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "2. Top Centre Key",
+                            "type": "color",
+                            "content": ["id_custom_color[1]", 0, 1, 1]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "3. Middle Left Key",
+                            "type": "color",
+                            "content": ["id_custom_color[2]", 0, 1, 2]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "4. Middle Centre Key",
+                            "type": "color",
+                            "content": ["id_custom_color[3]", 0, 1, 3]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "5. Middle Right Key",
+                            "type": "color",
+                            "content": ["id_custom_color[4]", 0, 1, 4]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "6. Bottom Left Key",
+                            "type": "color",
+                            "content": ["id_custom_color[5]", 0, 1, 5]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "7. Bottom Centre Key",
+                            "type": "color",
+                            "content": ["id_custom_color[6]", 0, 1, 6]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 16",
+                            "label": "8. Bottom Right Key",
+                            "type": "color",
+                            "content": ["id_custom_color[7]", 0, 1, 7]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "0. Disable Layer 0 color",
+                            "type": "toggle",
+                            "content": ["id_custom_l0_off", 0, 3]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17 && {id_custom_l0_off} == 1",
+                            "label": "0. Layer 0",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[0]", 0, 2, 0]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "1. Layer 1",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[1]", 0, 2, 1]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "2. Layer 2",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[2]", 0, 2, 2]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "3. Layer 3",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[3]", 0, 2, 3]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "4. Layer 4",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[4]", 0, 2, 4]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "5. Layer 5",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[5]", 0, 2, 5]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "6. Layer 6",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[6]", 0, 2, 6]
+                        },
+                        {
+                            "showIf": "{id_qmk_rgb_matrix_effect} == 17",
+                            "label": "7. Layer 7",
+                            "type": "color",
+                            "content": ["id_custom_lyrclr[7]", 0, 2, 7]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "layouts": {
+        "keymap": [
+            [{ "w": 0.25, "h": 0.25, "d": true }, ""],
+            [{ "y": -0.75, "x": 0.25 }, "0,0", "0,1", "0,2\n\n\n\n\n\n\n\n\ne0"],
+            [{ "x": 0.25 }, "1,0", "1,1", "1,2"],
+            [{ "x": 0.25 }, "2,0", "2,1", "2,2"],
+            [{ "x": 3.25, "w": 0.25, "h": 0.25, "d": true }, ""]
+        ]
+    }
+}
