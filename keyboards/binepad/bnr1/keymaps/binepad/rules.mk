@@ -1,13 +1,22 @@
 # Copyright 2022 Binepad (@binpad)
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-NKRO_ENABLE = no  # too few keys for NKRO to make sense
-VIA_ENABLE = yes
 VIAL_ENABLE = yes
-QMK_SETTINGS = no  # don't need these
 
-ENCODER_MAP_ENABLE = yes
-MIDI_ENABLE = yes
-
-VPATH += $(QMK_USERSPACE)/keyboards/binepad/common
-SRC += binepad_common.c
+ifneq ($(findstring v1,$(KEYBOARD)),)
+    QMK_SETTINGS = no
+    LTO_ENABLE = yes
+endif
+# ifneq ($(findstring v2,$(KEYBOARD)),)
+#     QMK_SETTINGS = yes
+# endif
+ifneq ($(findstring v3,$(KEYBOARD)),)
+    $(info Ψ Vial-QMK qmk_settings.c hack applied)
+    QMK_SETTINGS = no
+    AUTO_SHIFT_ENABLE := yes
+    SRC += byo_settings.c
+    OPT_DEFS += -DQMK_SETTINGS \
+        -DAUTO_SHIFT_NO_SETUP -DAUTO_SHIFT_REPEAT_PER_KEY -DAUTO_SHIFT_NO_AUTO_REPEAT_PER_KEY \
+        -DPERMISSIVE_HOLD_PER_KEY -DHOLD_ON_OTHER_KEY_PRESS_PER_KEY -DQUICK_TAP_TERM_PER_KEY -DRETRO_TAPPING_PER_KEY \
+        -DCOMBO_TERM_PER_COMBO
+endif
