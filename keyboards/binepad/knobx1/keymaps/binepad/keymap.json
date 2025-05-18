@@ -1,0 +1,25 @@
+{
+    "config": {
+        "features": {
+            "encoder_map": true,
+            "nkro": false,
+            "via": true
+        }
+    },
+    "encoders": [
+        [
+            { "ccw": "KC_VOLD", "cw": "KC_VOLU" }
+        ]
+    ],
+    "keyboard": "binepad/knobx1",
+    "keymap": "default",
+    "layers": [
+        ["QK_KB_2", "KC_MUTE"]
+    ],
+    "layout": "LAYOUT",
+    "version": 1,
+    "modules": [
+        "binepad/bp_encoder_configurable",
+        "binepad/bp_double_tap_lite"
+    ]
+}
