@@ -3,114 +3,186 @@
 
 #include QMK_KEYBOARD_H
 
-#include "bnk9.h"
+#include "bnk9_user.h"
 
-#ifdef VIAL_PROTOCOL_VERSION
+#if defined(VIAL_PROTOCOL_VERSION) || defined(BUILD_ID)
 #    error "This keymap is not intended for VIAL. Please use QMK."
 #endif
 
-#ifdef CONSOLE_ENABLE
-#    include "print.h"
-// #    error CONSOLE_ENABLE is ON!
+#ifdef COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
+#    include "sr_caffeine.h"
 #endif
 
-#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
-#    include "caffeine.h"
-#    define KC_CAFF KC_CAFFEINE_TOGGLE
+#ifdef COMMUNITY_MODULE_SR_VERSION_ENABLE
+#    include "sr_version.h"
 #endif
 
-// clang-format off
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /*
-     * ┌───┐
-     * │(K)│
-     * ├───┼───┬───┐
-     * │ 1 │ 2 │ 3 │
-     * ├───┼───┼───┤
-     * │ 4 │ 5 │ 6 │
-     * ├───┼───┼───┤
-     * │ 7 │ 8 │ 9 │
-     * └───┴───┴───┘
-     */
+#ifdef COMMUNITY_MODULE_BP_DOUBLE_TAP_LITE_ENABLE
+#    include "bp_double_tap_lite.h"
+#endif
 
-    [0] = LAYOUT(
-        KC_MUTE,
-        KC_P1,    KC_P2,    KC_P3,
-        KC_P4,    KC_P5,    KC_P6,
-        KC_P7,    KC_P8,    LT(1, KC_P9)
-    ),
-    [1] = LAYOUT(
-        RGB_TOG,
-        RGB_HUI,  RGB_SAI,  RGB_SPI,
-        RGB_HUD,  RGB_SAD,  RGB_SPD,
-        RGB_RMOD, RGB_MOD,  _______
-    )
-};
-// clang-format on
+// ---------- Technicaly not needed, but good to optimise ----------
 
-#ifdef ENCODER_MAP_ENABLE
+#ifdef MATRIX_MASKED
 // clang-format off
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [1] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) }
-};
+// const matrix_row_t matrix_mask[] = {
+//     0b110,
+//     0b111,
+//     0b111,
+// };
 // clang-format on
-#endif // ENCODER_MAP_ENABLE
+#endif
+
+#ifdef CHORDAL_HOLD
+// clang-format off
+// const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT_ortho_3x3(
+//     'R', 'R', 'R',
+//     'R', 'R', 'R',
+//     'R', 'R', 'R'
+// );
+// clang-format on
+#endif
+
+// ---------- Layer Buttons -----------
+
+#ifdef DYNAMIC_KEYMAP_LAYER_COUNT
+#    define BNK9_KEYMAP_LAYER_COUNT DYNAMIC_KEYMAP_LAYER_COUNT
+#else
+#    define BNK9_KEYMAP_LAYER_COUNT 4
+#endif
+
+bool process_bnk9_layer_up(keyrecord_t *record) {
+    if (record->event.pressed) {
+        uint8_t current_layer = get_highest_layer(layer_state);
+        uint8_t next_layer    = (current_layer + 1) % BNK9_KEYMAP_LAYER_COUNT;
+        layer_move(next_layer);
+    }
+    return false;
+}
+
+bool process_bnk9_layer_down(keyrecord_t *record) {
+    if (record->event.pressed) {
+        uint8_t current_layer = get_highest_layer(layer_state);
+        uint8_t prev_layer    = (current_layer == 0) ? (BNK9_KEYMAP_LAYER_COUNT - 1) : (current_layer - 1);
+        layer_move(prev_layer);
+    }
+    return false;
+}
 
 // ---------- Optional Add-ons -----------
 
-#if defined(COMMUNITY_MODULE_CAFFEINE_ENABLE) && defined(COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE)
+// .......... Caffeine ..........
+
+#ifdef COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
 
 bool rgb_matrix_indicators_user(void) {
-    if (!rgb_matrix_indicators_caffeine()) return false;
+    if (!rgb_matrix_indicators_sr_caffeine()) return false;
     return true;
 }
 
 void matrix_scan_user(void) {
-    matrix_scan_caffeine();
+    matrix_scan_sr_caffeine();
 }
 
-// !! : Not needed when used as a module
-// void housekeeping_task_user(void) {
-//     housekeeping_task_caffeine();
-// }
+#endif // COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
 
-#else
-#    error "This build requires COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE"
-#endif // All the optionals
+// .......... Double Tap ..........
 
-/* !! : Only needed when debugging
-void keyboard_post_init_user(void) {
-#ifdef CONSOLE_ENABLE
-    // Customise these values to desired behaviour
-    debug_enable = true;
-    // debug_matrix = true;
-    // debug_keyboard=true;
-    // debug_mouse=true;
+#ifdef COMMUNITY_MODULE_BP_DOUBLE_TAP_LITE_ENABLE
+// clang-format off
+dt_keycodes_t double_tap_keycodes[] = {
+    {.kcc = B9_MUTE_PLAY_DOUBLE, .mode = DT_MODE_KEYCODE,  .kc1 = KC_MUTE,               .kc2 = KC_MPLY},
+    {.kcc = B9_LAYER_JUMP,       .mode = DT_MODE_FUNCTION, .fn1 = process_bnk9_layer_up, .fn2 = process_bnk9_layer_down}
+};
+// clang-format on
 #endif
+
+// ---------- RGB Matrix ----------
+
+bool get_leds_is_on(void) {
+    return rgb_matrix_get_flags() != LED_FLAG_NONE;
 }
-*/
+
+bool set_leds_on(keyrecord_t *record) {
+    if (record->event.pressed) {
+        rgb_matrix_set_flags(LED_FLAG_ALL);
+        rgb_matrix_enable_noeeprom();
+    }
+    return false;
+}
+
+bool set_leds_off(keyrecord_t *record) {
+    if (record->event.pressed) {
+        rgb_matrix_set_flags(LED_FLAG_NONE);
+        rgb_matrix_set_color_all(0, 0, 0);
+    }
+    return false;
+}
+
+// ========== Process Record ==========
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-#ifdef COMMUNITY_MODULE_CAFFEINE_ENABLE
+        case RM_TOGG: {
+            if (record->event.pressed) {
+                if (get_leds_is_on()) {
+                    return set_leds_off(record);
+                } else {
+                    return set_leds_on(record);
+                }
+            }
+            return false;
+        }
+
+        case RM_ON: {
+            return set_leds_on(record);
+        }
+
+        case RM_OFF: {
+            return set_leds_off(record);
+        }
+
+#ifdef COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
         // !! : no, it's not duplication, this is for VIA keymaps
-        case KC_CAFFEINE_TOGGLE:
-            return process_keycode_caffeine_toggle(record);
-            break;
-#endif
+        case B9_CAFFEINE_TOGGLE: {
+            return process_keycode_sr_caffeine_toggle(record);
+        }
 
-#ifdef COMMUNITY_MODULE_GLOBE_KEY_ENABLE
-        case KC_APPLE_GLOBE:
-            return process_record_globe_key(KC_GLOBE, record);
-            break;
-#endif
+            // `B9_MUTE_PLAY_DOUBLE` & `B9_LAYER_JUMP` are handled by `process_record_bp_double_tap_lite`
 
-#ifdef COMMUNITY_MODULE_VERSION_ENABLE
-        case KC_PRINT_VERSION:
-            return process_record_version(COMMUNITY_MODULE_SEND_VERSION, record);
-            break;
-#endif
+        case B9_LAYER_UP: {
+            return process_bnk9_layer_up(record);
+        }
+
+        case B9_LAYER_DOWN: {
+            // Layer down
+            return process_bnk9_layer_down(record);
+        }
+
+        case B9_LAYER_PRINT: {
+            if (record->event.pressed) {
+                uint8_t current_layer = get_highest_layer(layer_state);
+                char    layer_str[4];
+                snprintf(layer_str, sizeof(layer_str), "%d", current_layer);
+                SEND_STRING(layer_str);
+            }
+            return false;
+        }
+
+        case B9_CAFFEINE_ON: {
+            return process_keycode_sr_caffeine_on(record);
+        }
+
+        case B9_CAFFEINE_OFF: {
+            return process_keycode_sr_caffeine_off(record);
+        }
+#endif // COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
+
+#ifdef COMMUNITY_MODULE_SR_VERSION_ENABLE
+        case USER_SET_KEYCODE_SEND_VERSION: {
+            return process_keycode_sr_version(record);
+        }
+#endif // COMMUNITY_MODULE_SR_VERSION_ENABLE
     }
     return true;
 }
