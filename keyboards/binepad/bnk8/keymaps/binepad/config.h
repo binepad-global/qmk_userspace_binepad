@@ -3,7 +3,7 @@
 
 #pragma once
 
-#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 34 // needed for custom save to work
+#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 34 // needed for custom save to work, calc. from user_config_t
 #define VIA_FIRMWARE_VERSION 2           // needed to load next version of via json
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
@@ -14,8 +14,7 @@
 
 #define DOUBLE_TAP_KEY_COUNT 2
 
-/* The below overrides the QMK repo keyboard.json sets */
-
+// The below overrides the QMK repo keyboard.json sets
 #if defined(ENCODER_RESOLUTION) && defined(OS_DETECTION_ENABLE)
 #    define ENCODER_RESOLUTION_MACOS 4 // Used by BP_Encoder_Config community module
 // #    if ENCODER_RESOLUTION == 4

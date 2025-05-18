@@ -6,9 +6,6 @@
 #include "quantum.h"
 #ifdef VIA_ENABLE // Only works if VIA is enabled
 #    include "color.h"
-#endif
-
-#ifdef VIA_ENABLE // Only works if VIA is enabled
 
 #    if !defined(VIA_EEPROM_CUSTOM_CONFIG_SIZE) || VIA_EEPROM_CUSTOM_CONFIG_SIZE != 34
 #        error "Please set VIA_EEPROM_CUSTOM_CONFIG_SIZE to 34 in config.h"
@@ -44,7 +41,6 @@ enum custom_keycodes {
     B8__SPARE__8,           // 8
     // USER_SET_KEYCODE_SEND_VERSION
 };
-
 
 // clang-format on
 

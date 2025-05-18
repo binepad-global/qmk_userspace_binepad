@@ -76,21 +76,23 @@ void bnk8_config_set_value(uint8_t *data) {
             break;
         }
 
-        case id_custom_l0_off:
+        case id_custom_l0_off: {
 #    ifdef CONSOLE_ENABLE
             print("Per Layer layer 0 set to Off > ");
             print_buff(&(data[0]), 2);
 #    endif
             g_user_config.l0_off = value_data[0] != 0;
             break;
+        }
 
-        case id_encoder_resolution:
+        case id_encoder_resolution: {
 #    ifdef CONSOLE_ENABLE
             print("Set Resolution > ");
             print_buff(&(data[0]), 2);
 #    endif
             g_user_config.enc_res = value_data[0];
             break;
+        }
 
         case id_firmware_button: {
 #    ifdef CONSOLE_ENABLE
@@ -138,21 +140,28 @@ void bnk8_config_get_value(uint8_t *data) {
             value_data[2] = g_user_config.color[i].s;
             break;
         }
+
         case id_custom_lyrclr: {
             uint8_t i     = value_data[0];
             value_data[1] = g_user_config.lyrclr[i].h;
             value_data[2] = g_user_config.lyrclr[i].s;
             break;
         }
-        case id_custom_l0_off:
+
+        case id_custom_l0_off: {
             value_data[0] = g_user_config.l0_off ? 1 : 0;
             break;
-        case id_encoder_resolution:
+        }
+
+        case id_encoder_resolution: {
             value_data[0] = g_user_config.enc_res;
             break;
-        case id_firmware_button:
+        }
+
+        case id_firmware_button: {
             value_data[0] = 0; // ignore
             break;
+        }
     }
 }
 
@@ -187,7 +196,7 @@ bool get_encoder_default_pos(void) {
 
 #    else
 #        error "Needs COMMUNITY_MODULE_BP_ENCODER_CONFIGURABLE_ENABLE"
-#    endif
+#    endif // COMMUNITY_MODULE_BP_ENCODER_CONFIGURABLE_ENABLE
 
 void bnk8_config_load(void) {
     eeprom_read_block(&g_user_config, ((void *)BNK8_CONFIG_EEPROM_ADDR), VIA_EEPROM_CUSTOM_CONFIG_SIZE);

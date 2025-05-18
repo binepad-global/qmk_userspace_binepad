@@ -114,8 +114,8 @@ void matrix_scan_user(void) {
 #ifdef COMMUNITY_MODULE_BP_DOUBLE_TAP_LITE_ENABLE
 // clang-format off
 dt_keycodes_t double_tap_keycodes[] = {
-    {.kcc = QK_KB_1, .mode = DT_MODE_KEYCODE, .kc1 = KC_MUTE, .kc2 = KC_MPLY},
-    {.kcc = QK_KB_2, .mode = DT_MODE_FUNCTION, .fn1 = process_bnk8_layer_up, .fn2 = process_bnk8_layer_down}
+    {.kcc = B8_MUTE_PLAY_DOUBLE, .mode = DT_MODE_KEYCODE,  .kc1 = KC_MUTE,               .kc2 = KC_MPLY},
+    {.kcc = B8_LAYER_JUMP,       .mode = DT_MODE_FUNCTION, .fn1 = process_bnk8_layer_up, .fn2 = process_bnk8_layer_down}
 };
 // clang-format on
 #endif
@@ -221,9 +221,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #    endif
             return process_keycode_sr_caffeine_off(record);
         }
-#else
-#    error "!!"
-#endif
+#endif // COMMUNITY_MODULE_SR_CAFFEINE_ENABLE
 
 #ifdef COMMUNITY_MODULE_SR_VERSION_ENABLE
         case USER_SET_KEYCODE_SEND_VERSION: {
@@ -232,9 +230,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #    endif
             return process_keycode_sr_version(record);
         }
-#else
-#    error "!!"
-#endif
+#endif // COMMUNITY_MODULE_SR_VERSION_ENABLE
     }
     return true;
 }
