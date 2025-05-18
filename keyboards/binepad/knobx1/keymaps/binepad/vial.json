@@ -1,0 +1,19 @@
+{
+    "vial": {
+        "midi": "advanced"
+    },
+    "lighting": "qmk_rgblight",
+    "matrix": { "rows": 1, "cols": 2 },
+    "customKeycodes": [
+        {"name": "Layer +", "title": "Increase layer", "shortName": "Lyr +"},
+        {"name": "Layer -", "title": "Decrease layer", "shortName": "Lyr -"},
+        {"name": "Layer Jump", "title": "Tap to increase layer, double-tap to decrease layer", "shortName": "Lyr Jump"}
+    ],
+    "layouts": {
+        "keymap": [
+            ["0,0\n\n\n\n\n\n\n\n\ne",{"x":2},"0,1\n\n\n\n\n\n\n\n\ne"],
+            [{"x":1,"w":2,"h":2},"0,1"],
+            [{"y":1.5,"x":0.25,"a":7,"w":0.5,"h":0.5,"d":true},"0,0"]
+        ]
+    }
+}

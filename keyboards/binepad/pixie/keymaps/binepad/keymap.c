@@ -3,36 +3,39 @@
 
 #include QMK_KEYBOARD_H
 
-#include "binepad_common.h"
-
-#ifdef VIAL_PROTOCOL_VERSION
+#if defined(VIAL_PROTOCOL_VERSION) || defined(BUILD_ID)
 #    error "This keymap is not intended for VIAL. Please use QMK."
 #endif
 
-// clang-format off
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(
-        KC_MUTE, KC_MPLY,
-        KC_MPRV, KC_MNXT
-    )
-};
-// clang-format on
+#ifdef COMMUNITY_MODULE_SR_VERSION_ENABLE
+#    include "sr_version.h"
+#endif
 
-#if defined(ENCODER_MAP_ENABLE)
+#ifdef CHORDAL_HOLD
 // clang-format off
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = {
-        ENCODER_CCW_CW(KC_VOLD, KC_VOLU),
-        ENCODER_CCW_CW(KC_WH_U, KC_WH_D)
-    }
-};
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
+    'R', 'R',
+    'R', 'R'
+);
 // clang-format on
 #endif
 
+#ifndef COMMUNITY_MODULE_SR_VERSION_ENABLE
+#    error "This build requires COMMUNITY_MODULE_SR_VERSION_ENABLE"
+#endif // COMMUNITY_MODULE_SR_VERSION_ENABLE
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // call into binepad_common.c
-    if (!process_record_binepad(keycode, record)) {
-        return false;
+    switch (keycode) {
+#ifdef COMMUNITY_MODULE_SR_VERSION_ENABLE
+        case USER_SET_KEYCODE_SEND_VERSION: {
+#    ifdef CONSOLE_ENABLE
+            print("VERSION\n");
+#    endif
+            return process_keycode_sr_version(record);
+        }
+#else
+#    error "!!"
+#endif
     }
     return true;
 }

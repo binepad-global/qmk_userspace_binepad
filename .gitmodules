@@ -1,0 +1,6 @@
+[submodule "modules/silvinor"]
+	path = modules/silvinor
+	url = https://github.com/silvinor/qmk_modules.git
+[submodule "modules/binepad"]
+	path = modules/binepad
+	url = https://github.com/binepad-global/qmk_modules.git
