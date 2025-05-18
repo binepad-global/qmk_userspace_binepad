@@ -26,16 +26,6 @@
 
 // ---------- Technicaly not needed, but good to optimise ----------
 
-#ifdef MATRIX_MASKED
-// clang-format off
-const matrix_row_t matrix_mask[] = {
-    0b110,
-    0b111,
-    0b111,
-};
-// clang-format on
-#endif
-
 #ifdef CHORDAL_HOLD
 // clang-format off
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT_ortho_3x3(
