@@ -55,13 +55,13 @@ typedef union {
         hs_t color[9];
         hs_t lyrclr[9];
     };
+    uint8_t enc_res; // 1
     union {
         uint8_t flags; // 1
         struct {
             bool l0_off : 1;
         };
     };
-    uint8_t enc_res; // 1
 } user_config_t;
 
 extern user_config_t g_user_config;

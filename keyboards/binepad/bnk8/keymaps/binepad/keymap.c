@@ -142,7 +142,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RM_TOGG: {
 #ifdef CONSOLE_ENABLE
-            print("RM_TOGG\n");
+            if (record->event.pressed) print("RM_TOGG\n");
 #endif
             if (record->event.pressed) {
                 if (get_leds_is_on()) {
@@ -156,14 +156,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case RM_ON: {
 #ifdef CONSOLE_ENABLE
-            print("RM_ON\n");
+            if (record->event.pressed) print("RM_ON\n");
 #endif
             return set_leds_on(record);
         }
 
         case RM_OFF: {
 #ifdef CONSOLE_ENABLE
-            print("RM_OFF\n");
+            if (record->event.pressed) print("RM_OFF\n");
 #endif
             return set_leds_off(record);
         }
@@ -172,7 +172,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // !! : no, it's not duplication, this is for VIA keymaps
         case B8_CAFFEINE_TOGGLE: {
 #    ifdef CONSOLE_ENABLE
-            print("caffeine_toggle\n");
+            if (record->event.pressed) print("caffeine_toggle\n");
 #    endif
             return process_keycode_sr_caffeine_toggle(record);
         }
@@ -200,14 +200,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case B8_CAFFEINE_ON: {
 #    ifdef CONSOLE_ENABLE
-            print("caffeine_on\n");
+            if (record->event.pressed) print("caffeine_on\n");
 #    endif
             return process_keycode_sr_caffeine_on(record);
         }
 
         case B8_CAFFEINE_OFF: {
 #    ifdef CONSOLE_ENABLE
-            print("caffeine_off\n");
+            if (record->event.pressed) print("caffeine_off\n");
 #    endif
             return process_keycode_sr_caffeine_off(record);
         }
@@ -216,7 +216,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef COMMUNITY_MODULE_SR_VERSION_ENABLE
         case USER_SET_KEYCODE_SEND_VERSION: {
 #    ifdef CONSOLE_ENABLE
-            print("VERSION\n");
+            if (record->event.pressed) print("VERSION\n");
 #    endif
             return process_keycode_sr_version(record);
         }
