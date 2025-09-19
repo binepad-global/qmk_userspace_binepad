@@ -41,6 +41,13 @@ dt_keycodes_t double_tap_keycodes[] = {
 
 // ========== Process Record ==========
 
+void x1_layer_led(uint8_t lyr) {
+    gpio_write_pin(IND1_LED, lyr > 0);
+    gpio_write_pin(IND2_LED, lyr > 1);
+    gpio_write_pin(IND3_LED, lyr > 2);
+    gpio_write_pin(IND4_LED, lyr > 3);
+}
+
 // #ifdef CONSOLE_ENABLE
 
 // uint8_t last_layer = 0xFF;
