@@ -7,7 +7,7 @@
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 5 // 4 is default
 
-// #define MIDI_ADVANCED
+#define MIDI_ADVANCED
 
 /* Vile {yes, the adjective :) } */
 

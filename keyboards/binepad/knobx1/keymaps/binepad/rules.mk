@@ -8,3 +8,9 @@ OS_DETECTION_ENABLE = yes # needed for BP Encoder Configurable community module
 OS_DETECTION_ENABLE = yes
 VIAL_ENABLE = yes
 KEY_OVERRIDE_ENABLE = no
+
+# Needed for Advanced MIDI
+MIDI_ENABLE = yes
+QMK_SETTINGS = no
+COMBO_ENABLE = no
+LTO_ENABLE = yes
