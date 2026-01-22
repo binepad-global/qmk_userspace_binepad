@@ -11,10 +11,14 @@
 #    ifndef OLED_SPLASH_TIMEOUT
 #        define OLED_SPLASH_TIMEOUT 4500 // 4.5 seconds
 #    endif
+#    ifndef OLED_SPLASH_ANIMATION_TIME
+#        define OLED_SPLASH_ANIMATION_TIME 25 // .025 seconds
+#    endif
 
 // clang-format off
 enum oled_modes {
     OLED_SPLASH,
+    OLED_ANIMATION,
     OLED_DEFAULT,
     OLED_OFF,
     __NUM_OLED_MODES
@@ -28,6 +32,7 @@ bool candypad_render_default_user(void);
 extern uint8_t  oled_mode;
 extern bool     oled_repaint_requested;
 extern uint32_t oled_splash_timer;
+extern uint8_t  oled_splash_animation_step;
 
 #endif // OLED_ENABLE
 
