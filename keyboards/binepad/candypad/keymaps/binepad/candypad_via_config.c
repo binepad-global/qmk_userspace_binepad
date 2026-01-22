@@ -16,17 +16,19 @@ void candypad_config_set_value(uint8_t *data) {
     uint8_t *value_data = &(data[1]);
 
     switch (*value_id) {
-        case id_rtc_date:
-            // not implemented yet
-            break;
+            /*
+            case id_rtc_date:
+                // not implemented yet
+                break;
 
-        case id_rtc_time:
-            // not implemented yet
-            break;
+            case id_rtc_time:
+                // not implemented yet
+                break;
 
-        case id_rtc_posix_time:
-            // not implemented yet
-            break;
+            case id_rtc_posix_time:
+                // not implemented yet
+                break;
+            */
 
         case id_firmware_button: {
             switch (value_data[0]) {
@@ -58,6 +60,7 @@ void candypad_config_get_value(uint8_t *data) {
     uint8_t *value_data = &(data[1]);
 
     switch (*value_id) {
+        /*
         case id_rtc_date:
             // not implemented yet
             break;
@@ -69,6 +72,7 @@ void candypad_config_get_value(uint8_t *data) {
         case id_rtc_posix_time:
             // not implemented yet
             break;
+        */
 
         case id_firmware_button:
             value_data[0] = 0; // ignore
