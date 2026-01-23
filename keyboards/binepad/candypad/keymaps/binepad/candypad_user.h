@@ -12,7 +12,7 @@
 #        define OLED_SPLASH_TIMEOUT 4500 // 4.5 seconds
 #    endif
 #    ifndef OLED_SPLASH_ANIMATION_TIME
-#        define OLED_SPLASH_ANIMATION_TIME 25 // .025 seconds
+#        define OLED_SPLASH_ANIMATION_TIME (OLED_UPDATE_INTERVAL)
 #    endif
 
 // clang-format off
