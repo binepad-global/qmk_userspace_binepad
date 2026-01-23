@@ -20,7 +20,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint8_t  oled_mode                  = OLED_SPLASH;
 bool     oled_repaint_requested     = false;
 uint32_t oled_splash_timer          = 0;
-uint8_t  oled_splash_animation_step = 1;
+uint8_t  oled_splash_animation_step = 0;
 
 /** CandyPad Logo */
 __attribute__((weak)) bool candypad_render_logo_user(void) {
@@ -33,28 +33,23 @@ __attribute__((weak)) bool candypad_render_logo_user(void) {
     };
     uint8_t buff_logo[16 * 4 * 8];
 
-    if (OLED_ANIMATION == oled_mode) {
-        if (oled_splash_animation_step == 0) {
-            memcpy_P(buff_logo, raw_logo, sizeof(buff_logo));
-        } else if (oled_splash_animation_step >= OLED_DISPLAY_HEIGHT) {
-            memset(buff_logo, 0, sizeof(buff_logo)); // fill with 0s
-        } else {
-            const uint8_t shift = oled_splash_animation_step;
-            for (uint8_t x = 0; x < 128; x++) {
-                uint32_t col = 0;
-                col |= (uint32_t)pgm_read_byte(raw_logo + (0 * 128) + x) << 0;
-                col |= (uint32_t)pgm_read_byte(raw_logo + (1 * 128) + x) << 8;
-                col |= (uint32_t)pgm_read_byte(raw_logo + (2 * 128) + x) << 16;
-                col |= (uint32_t)pgm_read_byte(raw_logo + (3 * 128) + x) << 24;
-                col >>= shift;
-                buff_logo[(0 * 128) + x] = (uint8_t)(col & 0xFF);
-                buff_logo[(1 * 128) + x] = (uint8_t)((col >> 8) & 0xFF);
-                buff_logo[(2 * 128) + x] = (uint8_t)((col >> 16) & 0xFF);
-                buff_logo[(3 * 128) + x] = (uint8_t)((col >> 24) & 0xFF);
-            }
-        }
-    } else {
+    if (OLED_SPLASH == oled_mode || oled_splash_animation_step == 0) {
         memcpy_P(buff_logo, raw_logo, sizeof(buff_logo));
+    } else {
+        memset(buff_logo, 0, sizeof(buff_logo)); // fill with 0s
+        const uint8_t shift = oled_splash_animation_step;
+        for (uint8_t x = 0; x < 128; x++) {
+            uint32_t col = 0;
+            col |= (uint32_t)pgm_read_byte(raw_logo + (0 * 128) + x) << 0;
+            col |= (uint32_t)pgm_read_byte(raw_logo + (1 * 128) + x) << 8;
+            col |= (uint32_t)pgm_read_byte(raw_logo + (2 * 128) + x) << 16;
+            col |= (uint32_t)pgm_read_byte(raw_logo + (3 * 128) + x) << 24;
+            col >>= shift;
+            buff_logo[(0 * 128) + x] = (uint8_t)(col & 0xFF);
+            buff_logo[(1 * 128) + x] = (uint8_t)((col >> 8) & 0xFF);
+            buff_logo[(2 * 128) + x] = (uint8_t)((col >> 16) & 0xFF);
+            buff_logo[(3 * 128) + x] = (uint8_t)((col >> 24) & 0xFF);
+        }
     }
 
     oled_write_raw_P((const char *)buff_logo, sizeof(buff_logo));
@@ -81,18 +76,21 @@ void housekeeping_task_user(void) {
     if (0 != oled_splash_timer) {
         if (OLED_SPLASH == oled_mode) {
             if (timer_elapsed(oled_splash_timer) > OLED_SPLASH_TIMEOUT) {
-                oled_mode         = OLED_ANIMATION;
-                oled_splash_timer = sync_timer_read(); // reset for recount
-                oled_repaint_requested = true;
+                oled_mode                  = OLED_ANIMATION;
+                oled_splash_animation_step = 1;
+                oled_repaint_requested     = true;
+                oled_splash_timer          = sync_timer_read(); // reset for recount
             }
         } else if (OLED_ANIMATION == oled_mode) {
             if (timer_elapsed(oled_splash_timer) > OLED_SPLASH_ANIMATION_TIME) {
                 if (oled_splash_animation_step < (OLED_DISPLAY_HEIGHT)) {
                     oled_splash_animation_step++;
-                    oled_splash_timer = sync_timer_read(); // reset for recount
+                    oled_repaint_requested = true;
+                    oled_splash_timer      = sync_timer_read(); // reset for recount
                 } else {
-                    oled_mode         = OLED_DEFAULT;
-                    oled_splash_timer = 0; // disable
+                    oled_mode              = OLED_DEFAULT;
+                    oled_splash_timer      = 0; // disable
+                    oled_repaint_requested = true;
                 }
             }
         }
