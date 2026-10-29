@@ -4,3 +4,6 @@
 [submodule "modules/binepad"]
 	path = modules/binepad
 	url = https://github.com/binepad-global/qmk_modules.git
+[submodule "modules/jtrelfa"]
+	path = modules/jtrelfa
+	url = https://github.com/jtrelfa/qmk_modules.git

@@ -1,0 +1,55 @@
+{
+    "config": {
+        "features": {
+            "encoder_map": true,
+            "via": true
+        }
+    },
+    "encoders": [
+        [{ "ccw": "KC_VOLD", "cw": "KC_VOLU" }],
+        [{ "ccw": "KC_TRNS", "cw": "KC_TRNS" }],
+        [{ "ccw": "KC_TRNS", "cw": "KC_TRNS" }]
+    ],
+    "keyboard": "binepad/bnk9",
+    "keymap": "jtrelfa",
+    "layers": [
+        [
+            "KC_MUTE",
+            "KC_P1",
+            "KC_P2",
+            "KC_P3",
+            "KC_P4",
+            "KC_P5",
+            "KC_P6",
+            "CM_POM",
+            "KC_P8",
+            "LT(1,KC_P9)"
+        ],
+        [
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS",
+            "KC_TRNS"
+        ],
+        [
+            "KC_TRNS",
+            "KC_Q",
+            "KC_W",
+            "KC_E",
+            "KC_A",
+            "KC_S",
+            "KC_D",
+            "KC_Z",
+            "KC_X",
+            "KC_C"
+        ]
+    ],
+    "layout": "LAYOUT",
+    "modules": ["jtrelfa/pomodoro"]
+}
